@@ -1,0 +1,41 @@
+# License Summary
+
+This repository uses **dual licensing** to balance maximum distribution with author attribution.
+
+## Code (agents, skills frontmatter, scripts, templates as structure)
+
+Licensed under **Apache License, Version 2.0**.
+Full text: see [`LICENSE-CODE`](LICENSE-CODE).
+
+You may use, modify, distribute, and sublicense the code, including for commercial purposes, provided you:
+
+- Retain the copyright notice
+- State your changes
+- Include the Apache 2.0 license text in your distribution
+
+## Documentation (standards, README, examples, worked-examples, playbook, all `.md` content)
+
+Licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**.
+Full text: see [`LICENSE-DOCS`](LICENSE-DOCS).
+
+You may copy, redistribute, remix, transform, and build upon the material — for any purpose, including commercial use — provided you give appropriate credit:
+
+> Based on *Heroes Gap Theory for AI and Humans* by Ilya Krasinsky.
+> Source: https://github.com/idkras/heroes-gap-theory-for-ai-and-humans
+> Licensed under CC BY 4.0.
+
+## Copyright
+
+© 2024-2026 Ilya Krasinsky. All rights reserved.
+
+The licenses above grant you specific permissions; the underlying authorship and copyright remain with the author.
+
+## Trademark and brand
+
+The names "Heroes Gap Theory", "Praxis", "Pulse.ai" (when used in this repository as anonymized references) are not trademarked and may be used in attribution.
+
+The author's name "Ilya Krasinsky" is the author's identity and may not be used to suggest endorsement of derivative works without permission.
+
+## Citation
+
+For academic and professional citation, see [`CITATION.cff`](CITATION.cff).

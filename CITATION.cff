@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use Heroes Gap Theory in your research, product, course, or consulting practice, please cite it as below."
+title: "Heroes Gap Theory for AI and Humans"
+abstract: >
+  A methodology for diagnosing gaps between expectation and reality in
+  teams, products, AI agents, and individual contributors. Combines Theory
+  of Constraints, Jobs-to-be-Done, REDUCE framework, and Speed of Trust
+  economics with original work on Glue Effort measurement (0-100 scale)
+  and four-type gap taxonomy (knowledge, execution, feedback, integration).
+authors:
+  - family-names: Krasinsky
+    given-names: Ilya
+    email: idkras@gmail.com
+    orcid: ""
+version: "0.1.0"
+date-released: "2026-04-26"
+license: "Apache-2.0 AND CC-BY-4.0"
+repository-code: "https://github.com/idkras/heroes-gap-theory-for-ai-and-humans"
+url: "https://github.com/idkras/heroes-gap-theory-for-ai-and-humans"
+keywords:
+  - "gap theory"
+  - "theory of constraints"
+  - "jobs to be done"
+  - "ai agents"
+  - "team management"
+  - "change management"
+  - "glue effort"
+  - "hypothesis falsification"
+  - "rca"
+  - "process design"
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Krasinsky
+      given-names: Ilya
+  title: "Heroes Gap Theory for AI and Humans"
+  version: "0.1.0"
+  year: 2026
+  url: "https://github.com/idkras/heroes-gap-theory-for-ai-and-humans"

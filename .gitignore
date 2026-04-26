@@ -1,0 +1,35 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor
+.vscode/
+.idea/
+*.iml
+
+# Python (for future tools)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Node (for future tools)
+node_modules/
+dist/
+build/
+
+# Local secrets / private overrides
+.env
+.env.local
+*.private.md
+
+# Build outputs
+*.pdf
+*.epub
+_site/
+public/
