@@ -13,7 +13,7 @@
 
 Это публичный экспорт каноничной части **Gap Theory** — методологии, которую я применял с 2024-2026 года в advising-проектах с командами marketing analytics platforms (galaxypets, autovin, fashionhub, sleepwell, designcraft, fitcrew, bigfin), а также в собственной команде Praxis/Pulse.ai.
 
-Репозиторий даёт **9 стандартов**, **18 скилов**, **10 субагентов**, **5 примеров диагностики** и **playbook AI-management** — всё, чтобы внешняя команда или AI-агент могли:
+Репозиторий даёт **9 стандартов**, **19 скилов**, **10 субагентов**, **5 примеров диагностики** и **playbook AI-management** — всё, чтобы внешняя команда или AI-агент могли:
 
 1. **Найти разрыв** между ожиданием и реальностью в любой системе (человек, команда, продукт, процесс)
 2. **Классифицировать разрыв** по 4 типам: knowledge / execution / feedback / integration
@@ -79,7 +79,8 @@
 │   ├── 15-next-outcome-output-mapping.md
 │   ├── 16-task-completion-persistence.md
 │   ├── 17-document-creation-guard.md
-│   └── 18-trust-metric.md
+│   ├── 18-trust-metric.md
+│   └── 19-orchestrator-pipeline.md          (SSOT для 12 стадий оркестратора + QA/design гейты)
 │
 ├── agents/                            ← 10 субагентов (Claude/AI-agnostic)
 │   ├── hypothesis-designer.md
