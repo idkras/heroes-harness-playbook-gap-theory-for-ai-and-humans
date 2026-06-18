@@ -1,0 +1,17 @@
+# Detachable-skill manifest — knowledge skill (governance harness, Standard 0.3 §3.2).
+schema_version: 1
+name: 1-critical-chain-status-report
+kind: knowledge             # SKILL.md only, no scripts/ — trivially detachable (copy markdown)
+detachable: true            # knowledge-skills carry no code coupling
+runtime: none
+deps:
+  external: []
+  workspace: []
+requires_skills: []
+requires_credentials: []
+entrypoints: []
+tests:
+  path: none
+  run: none
+fixtures: []
+canonical_source: SKILL.md

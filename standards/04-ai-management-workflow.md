@@ -7,7 +7,7 @@ logical_id: standard:ai_management_workflow
 updated: 16 March 2026, 09:10 CET by Codex Agent by Ilya Krasinsky
 previous version: 1.0, 10 March 2026, 19:55 CET by Codex Agent by Ilya Krasinsky
 based on: [Registry Standard](abstract://standard:registry_standard), [AI Inception-Delivery Process UX Glue Effort Gap Discovery System Standard](product-ops/ai-inception-delivery-process-ux-glue-effort-gap-discovery-system.md), [Outcome Zero-Gap JTBD Transfer Standard](abstract://standard:outcome_zero_gap_transfer), [Task Lead Time · CFD Metrics Standard](abstract://standard:task_leadtime_cfd_metrics), [Changelog Standard](abstract://standard:changelog_standard), [release notes standard](abstract://standard:release_notes_standard), [HelpDesk Integration Standard](abstract://standard:helpdesk_integration_standard)
-integrated: client workspaces like `galaxypets-management`, `rfl.pro`, shared `heroes-pulseai-workspace`
+integrated: client workspaces like `<client>-management`, `rfl.pro`, shared `heroes-<internal-component>-workspace`
 version: 1.1
 status: Active
 tags: standard, ai-management, workflow, client-workspace, portfolio, beads, jira, linear, telegram, release-management
@@ -27,7 +27,7 @@ tags: standard, ai-management, workflow, client-workspace, portfolio, beads, jir
 
 Зафиксировать единый порядок внедрения `AI management` в клиентские и внутренние workspace-репозитории. Стандарт отвечает на вопрос не “как настроить одну папку”, а “как перевести компанию на operating model, где discovery, portfolio, execution, ticket bridge, release activation и durable knowledge работают как одна система”.
 
-Этот стандарт нужен для rollout в клиентах вроде `rfl.pro`, но не ограничен одним клиентом. Его задача — дать один воспроизводимый workflow, который можно запускать в разных repo, не копируя каждый раз новую process-версию из `galaxypets`.
+Этот стандарт нужен для rollout в клиентах вроде `rfl.pro`, но не ограничен одним клиентом. Его задача — дать один воспроизводимый workflow, который можно запускать в разных repo, не копируя каждый раз новую process-версию из `<client>`.
 
 ## 📋 JTBD-сценарии
 
@@ -41,7 +41,7 @@ tags: standard, ai-management, workflow, client-workspace, portfolio, beads, jir
 
 ### 1.1 Shared-first principle
 
-Канонические стандарты и shared tooling должны жить в одном месте, обычно в `heroes-pulseai-workspace`.
+Канонические стандарты и shared tooling должны жить в одном месте, обычно в `heroes-<internal-component>-workspace`.
 
 Клиентский repo не должен копировать весь process layer целиком.
 Он должен:
@@ -286,9 +286,9 @@ External tracker never replaces the local operating graph.
 5. Ни одна team activation не считается завершённой без first useful artifact.
 6. Legacy todo layers либо архивируются, либо явно маркируются как non-canonical.
 
-## 5. Что переносим из GalaxyPets как process pattern
+## 5. Что переносим из <client> как process pattern
 
-Из `galaxypets-management` в клиентские repo переносится не контент, а operating discipline:
+Из `<client>-management` в клиентские repo переносится не контент, а operating discipline:
 
 1. unified portfolio registry;
 2. owner / DRI / RAT / weekly verdict;

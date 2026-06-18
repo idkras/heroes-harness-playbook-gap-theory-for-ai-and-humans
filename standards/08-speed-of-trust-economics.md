@@ -7,7 +7,7 @@ logical_id: standard:speed_of_trust_economics_and_trust_repair
 updated: 14 March 2026, 10:58 CET by Ilya Krasinsky
 previous version: N/A
 based on: [Task Master Standard](abstract://standard:task_master_standard), [Registry Standard](abstract://standard:registry_standard), [Book Conversion and Knowledge Extraction Standard](abstract://standard:book_conversion_knowledge_extraction_standard), [Outcome Zero-Gap JTBD Transfer Standard](abstract://standard:outcome_zero_gap_transfer), [Gap Theory Standard](abstract://standard:gap_theory_standard)
-integrated: [standards .md]/7. team managment · culture/5 пороков команд · скорость доверия.md, `Covey Speed of Trust` source pages from `{owner_local}/Dropbox/[GrowHacks Refs]/[books]/Скорость доверия. Кови/`
+integrated: <standard-ref>
 version: 1.0
 status: Active
 tags: standard, trust, team-management, execution, communication, organizational-change, economics
@@ -511,5 +511,5 @@ High-trust dividend проявляется как:
 1. Source images found in `{owner_local}/Dropbox/[GrowHacks Refs]/[books]/Скорость доверия. Кови/`.
 2. OCR executed with `tesseract -l rus+eng`.
 3. Contact sheet created at `{owner_local}/Dropbox/[GrowHacks Refs]/[books]/Скорость доверия. Кови/covey-speed-of-trust-10-pages-contact-sheet.png`.
-4. Duplicate-check performed against existing standards in `[standards .md]`.
+4. Duplicate-check performed against existing standards in `<internal-folder>`.
 5. Existing adjacent standard `5 пороков команд · скорость доверия` kept as neighbor, not overwritten, because it covers a different frame.

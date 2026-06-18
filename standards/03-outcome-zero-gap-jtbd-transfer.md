@@ -7,7 +7,7 @@ logical_id: standard:outcome_zero_gap_jtbd_transfer
 updated: 21 February 2026, CET by AI Assistant
 previous version: None (initial version)
 based on: [Gap Theory Standard](abstract://standard:gap_theory_standard), [Task Master Standard](abstract://standard:task_master_standard), [Registry Standard](abstract://standard:registry_standard)
-integrated: [Pulse.ai MCP Standard](abstract://standard:rick_ai_mcp_standard), [TDD Documentation Standard 4.1](abstract://standard:tdd_documentation_standard)
+integrated: [<internal-component> MCP Standard](abstract://standard:rick_ai_mcp_standard), [TDD Documentation Standard 4.1](abstract://standard:tdd_documentation_standard)
 version: 1.0
 status: Draft
 tags: standard, outcome, jtbd, gap-theory, handoff, transferability, real-data

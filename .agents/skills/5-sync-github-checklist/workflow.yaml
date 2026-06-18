@@ -1,0 +1,88 @@
+version: 1
+id: sync-github-main-delivery-cleanup
+owner_jtbd:
+  when: "PR, branch или worktree содержит ценную работу, но команда получает только то, что достижимо из origin/main."
+  actor: "агент, который выполняет sync/merge/cleanup в heroes-rickai-workspace"
+  want: "довести каждую ветку, PR и worktree до явного исхода: merged into origin/main, superseded and archived, or preserved for owner review."
+  so_that: "owner не видит хвосты в branch picker/worktree list, команда получает ценное через git pull, а диск не тратится на завершённые checkout."
+definition_of_done:
+  statement: "Sync done means team-visible value landed in origin/main and the local/remote git surface was cleaned or explicitly classified."
+  required:
+    - id: valuable_work_in_origin_main
+      criterion: "Every valuable code/doc/skill/hook artifact from the task is reachable from GitHub main, not only from a local branch/worktree/tag/stash."
+      verify: "gh api repos/<owner>/<repo>/contents/<key-path>?ref=main"
+    - id: pull_requests_closed
+      criterion: "Every PR in scope is merged, closed as superseded, or explicitly left open with owner-decision reason."
+      verify: "gh pr list --state open --json number,title,headRefName"
+    - id: remote_branches_classified
+      criterion: "Every origin branch in scope is classified as in-main, superseded+archive-tag, active-review, or owner-decision."
+      verify: "python3 scripts/branch_lifecycle_sweep.py --json --summary-only"
+    - id: local_branches_classified
+      criterion: "Local branch picker contains only main, current active bead branch, and registry/infra branches; all merged local ghosts are deleted."
+      verify: "git for-each-ref --format='%(refname:short)' refs/heads/"
+    - id: worktrees_cleaned_or_preserved
+      criterion: "Merged-and-clean worktrees are pruned; dirty, unmerged, detached, or gitignored-data worktrees are preserved with reason."
+      verify: "python3 <internal-module>/scripts/verify_branch_hygiene.py --prune"
+    - id: disk_cleanup_attempted
+      criterion: "If worktree count/size/free-space is over threshold, safe prune was attempted and the remaining blockers are listed."
+      verify: "python3 scripts/worktree_disk_guard.py --prune"
+    - id: no_phantom_deletion
+      criterion: "Main tree is complete; merge did not collapse the checkout or bypass CI."
+      verify: "python3 scripts/verify_tree_completeness.py HEAD --base origin/main --strict"
+acceptance_criteria:
+  - id: all_value_visible_to_team
+    pass: "A fresh clone or git pull from origin/main can see the delivered artifacts."
+    fail: "Any required artifact exists only in .claude/worktrees, /tmp, local branch, local stash, or local tag."
+  - id: no_unreviewed_pr_tail
+    pass: "Open PR list is empty or every remaining PR has a one-line owner-decision reason and next action."
+    fail: "A PR is left open because the agent did not inspect CI, conflicts, or mergeability."
+  - id: no_unclassified_branch_tail
+    pass: "Remote and local branches in scope have verdicts: in-main, superseded+archive-tag, active-review, or owner-decision."
+    fail: "A branch is kept merely because it is old, confusing, or not visible in the local UI."
+  - id: no_unclassified_worktree_tail
+    pass: "Each worktree is pruned or has a preservation reason: current, protected, dirty, gitignored-data, detached, or unmerged."
+    fail: "A merged clean worktree remains without reason, or a dirty worktree is deleted to reclaim disk."
+  - id: cleanup_operation_evidenced
+    pass: "Final report includes worktree count, GB used, free GB, prune summary, and blocker samples."
+    fail: "Final report says clean/done without disk/worktree evidence."
+cleanup_verification:
+  canonical_commands:
+    pre_sync:
+      - "python3 scripts/worktree_disk_guard.py"
+      - "python3 <internal-module>/scripts/verify_branch_hygiene.py --prune"
+      - "python3 scripts/branch_lifecycle_sweep.py --json --summary-only"
+    post_merge:
+      - "python3 scripts/worktree_disk_guard.py --prune"
+      - "WORKTREE_PRUNE_ACK='<reason>' python3 scripts/worktree_disk_guard.py --prune --execute"
+      - "python3 scripts/sync_dod_check.py --repo <owner>/<repo>"
+  pass_conditions:
+    - "prune_merged_clean == 0 after execute, or every remaining prune candidate has a current/protected/dirty/unmerged blocker."
+    - "No worktree with real dirty files or unsafe gitignored data is removed."
+    - "Archive tag exists before deleting any superseded branch that is not provably ancestor of origin/main."
+    - "Disk guard is run even when it cannot prune; blocker list is owner-visible."
+guardian_checks:
+  sync_github_contract:
+    script: "<internal-module>/scripts/verify_sync_github_contract.py --strict --tracked-only"
+    asserts:
+      - "workflow.yaml exists and contains definition_of_done"
+      - "workflow.yaml contains acceptance_criteria"
+      - "workflow.yaml contains cleanup_verification"
+      - "workflow.yaml names origin/main, PR, branch, worktree, disk guard, and branch hygiene commands"
+  branch_hygiene:
+    script: "<internal-module>/scripts/verify_branch_hygiene.py --strict --gha-annotations"
+    asserts:
+      - "broken worktree refs are errors"
+      - "stale remote branches are surfaced as cleanup/review candidates"
+      - "worktree prune classifier preserves dirty/unmerged/gitignored-data worktrees"
+  disk_guard:
+    script: "scripts/worktree_disk_guard.py --strict --prune"
+    asserts:
+      - "worktree pressure is reported"
+      - "safe prune delegates to verify_branch_hygiene.py"
+      - "execute requires WORKTREE_PRUNE_ACK"
+related_skills:
+  - "5-git-parallel-coordination"
+  - "5-land-to-main-mechanical"
+  - "4-worktree-lifecycle-cleanup"
+  - "0-main-cleanliness-guard"
+  - "0-root-structure-guardian"

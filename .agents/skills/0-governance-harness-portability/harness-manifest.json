@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "name": "project-governance-harness",
+  "standard": "0.3",
+  "description": "SSOT of the portable governance harness (Standard 0.3). Hooks + their registration requirement + script deps; skills + kind; affordance scripts + config. Consumed by verify_harness_wiring.py — the copy-kit verifies itself instead of hand-maintained tables (no drift). Universal: no client/project hardcode.",
+  "paths": {
+    "hooks_dir": ".claude/hooks",
+    "skills_dir": ".agents/skills",
+    "settings": ".claude/settings.json",
+    "settings_local": ".claude/settings.local.json"
+  },
+  "hooks": [
+    {
+      "file": "first_substantial_write_branch_bead_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit",
+            "NotebookEdit"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "branch_name_bead_ref_check.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "pr_bead_jtbd_ref_check.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": [
+        ".claude/hooks/branch_name_bead_ref_check.py",
+        "scripts/make_worktree.py"
+      ]
+    },
+    {
+      "file": "branch_ownership_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "worktree_isolation_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "git_worktree_completeness_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "userprompt_branch_bead_nudge.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "UserPromptSubmit",
+          "tools": [
+            "*"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "bd_anti_legend_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": [
+        "scripts/bd_anti_legend.py"
+      ]
+    },
+    {
+      "file": "docs_client_doc_gate.py",
+      "pillar": "B",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit",
+            "NotebookEdit"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "rickai_pipeline_output_path_gate.py",
+      "pillar": "B",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "root_new_entry_gate.py",
+      "pillar": "B",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write"
+          ]
+        },
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": [
+        "scripts/root_structure_router.py",
+        "config/root-structure-manifest.yaml"
+      ]
+    },
+    {
+      "file": "standards_creation_routing_gate.py",
+      "pillar": "B",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "expected_output_announce_check.py",
+      "pillar": "B",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit",
+            "NotebookEdit"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "detachable_skill_packaging_gate.py",
+      "pillar": "C",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit"
+          ]
+        }
+      ],
+      "depends_on": [
+        ".agents/skills/0-detachable-skill-packaging/scripts/skill_packaging_inventory.py"
+      ]
+    },
+    {
+      "file": "reusable_script_belongs_in_skill_gate.py",
+      "pillar": "C",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Write",
+            "Edit"
+          ]
+        }
+      ],
+      "depends_on": []
+    },
+    {
+      "file": "harness_guardian_check.py",
+      "pillar": "C",
+      "register": [
+        {
+          "event": "Stop"
+        }
+      ],
+      "depends_on": [
+        ".agents/skills/0-governance-harness-portability/scripts/verify_harness_wiring.py"
+      ]
+    },
+    {
+      "file": "untracked_critical_files_gate.py",
+      "pillar": "A",
+      "register": [
+        {
+          "event": "PreToolUse",
+          "tools": [
+            "Bash"
+          ]
+        }
+      ],
+      "depends_on": [],
+      "note": "RCA 2026-06-17: zero-threshold tier blocks branch-switch when untracked client deliverables under <internal-folder>/clients/.../projects/ exist (any size/age). Prevents cross-session branch-substitution from wiping agent work."
+    },
+    {
+      "file": "review_artifact_chat_relay_check.py",
+      "pillar": "C",
+      "register": [
+        {
+          "event": "Stop"
+        }
+      ],
+      "depends_on": [],
+      "note": "RCA 2026-06-17: review/READY/diagnostic artifact referenced by path in the final message but content not surfaced (no code-fence/table) → WARN/BLOCK so the owner sees review content in chat, not just a path. Ships staged WARN."
+    }
+  ],
+  "skills": [
+    {
+      "name": "0-document-creation-guard",
+      "pillar": "B",
+      "kind": "knowledge"
+    },
+    {
+      "name": "0-root-structure-guardian",
+      "pillar": "B",
+      "kind": "knowledge"
+    },
+    {
+      "name": "1-change-task-and-project-state-via-beads",
+      "pillar": "A",
+      "kind": "knowledge"
+    },
+    {
+      "name": "1-critical-chain-status-report",
+      "pillar": "A",
+      "kind": "knowledge"
+    },
+    {
+      "name": "0-detachable-skill-packaging",
+      "pillar": "C",
+      "kind": "code"
+    },
+    {
+      "name": "0-governance-harness-portability",
+      "pillar": "ALL",
+      "kind": "code"
+    }
+  ],
+  "scripts": [
+    {
+      "file": "scripts/make_worktree.py",
+      "role": "affordance",
+      "pillar": "A"
+    },
+    {
+      "file": "scripts/auto_merge_ready_prs.py",
+      "role": "infra",
+      "pillar": "C"
+    },
+    {
+      "file": ".github/workflows/land-ready.yml",
+      "role": "config",
+      "pillar": "C"
+    },
+    {
+      "file": "scripts/root_structure_router.py",
+      "role": "affordance",
+      "pillar": "B"
+    },
+    {
+      "file": "scripts/validate_skill_contract.py",
+      "role": "infra",
+      "pillar": "C"
+    },
+    {
+      "file": "config/root-structure-manifest.yaml",
+      "role": "config",
+      "pillar": "B"
+    },
+    {
+      "file": "scripts/harness_bootstrap.py",
+      "role": "infra",
+      "pillar": "C",
+      "note": "getting-started self-activation: chmod+path-normalize+verify+чеклист; SessionStart-хук во всех target"
+    },
+    {
+      "file": "scripts/harness_template_checksum.py",
+      "role": "infra",
+      "pillar": "C",
+      "note": "build-guarantee: полнота+целостность landed harness (missing/changed/uncontrolled→FAIL)"
+    }
+  ]
+}

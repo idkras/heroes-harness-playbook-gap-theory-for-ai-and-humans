@@ -10,7 +10,7 @@ description: "Use when validating the Gap Theory Standard extension \"Agent Dunb
 
 Validates the **Gap Theory Standard 1.5** extension "Agent Dunbar and Capacity of Relaxation" (2026-02-15) against 10 explicit hypotheses. Each hypothesis has **meaningful output** (what artifact or observation) and **outcome** (what value for the user), not only formal success criteria.
 
-**Standard path:** `[standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.5 gap theory standard 26 august 2025 2325 CET by ilya krasinsky.md`  
+**Standard path:** `<standard-ref>
 **Section to check:** `## 🤖 Расширение: Agent Dunbar и Capacity of Relaxation` and subsection `### Гипотезы валидации расширения`.
 
 ## When to Use
@@ -95,7 +95,7 @@ When someone needs to **validate the Gap Theory extension** (Agent Dunbar, Capac
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

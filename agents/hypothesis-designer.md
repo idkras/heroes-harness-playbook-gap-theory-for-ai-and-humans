@@ -49,7 +49,7 @@ skills:
 
 ## Обязательная база для чтения
 
-1. `[standards .md]/3. scenarium · jtbd · hipothises · offering · tone/2.2 hypothesis standard 14 may 2025 0740 cet by ai assistant.md` — §Структура гипотезы (расширенный формат), §Формат гипотезы v2.0 (триггер → проблема → изменение → output → outcome), §Проверка когнитивных искажений, §RAT Risk Assumption Test, §Жизненный цикл + 5-Why при опровержении
+1. `<standard-ref>), §Формат гипотезы v2.0 (триггер → проблема → изменение → output → outcome), §Проверка когнитивных искажений, §RAT Risk Assumption Test, §Жизненный цикл + 5-Why при опровержении
 2. `.agents/skills/4-actionable-hypothesis/SKILL.md` — формат 0-я гипотеза + альтернативы + verdict для analytical reviews
 3. `.agents/skills/2-so-what-outcome-ladder/SKILL.md` — правило останова чтобы критерий успеха не был checkpoint вместо outcome
 4. `.agents/agents/outcome-designer.md` §3.5 — 6-пунктовый gate (ID / число / срок / baseline / threshold / activation / daily-use / stop), все 6 должны быть 🟢 после тебя

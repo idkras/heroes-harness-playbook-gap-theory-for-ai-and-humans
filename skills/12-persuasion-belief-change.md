@@ -8,7 +8,7 @@ description: "Use when facing resistance from teams/clients/stakeholders or desi
 
 **Skill Type:** Advising · Change · Resistance  
 **When to Use:** When facing resistance from teams, clients, or stakeholders; when designing persuasion strategies; when applying 8.0 protective reactions or 8.1 organizational change  
-**Based on:** [Standard 8.2 Persuasion and Belief Change]([standards .md]/6. advising · review · supervising/8.2 persuasion and belief change standard 20 feb 2026 cet by ai assistant.md)
+**Based on:** [Standard 8.2 Persuasion and Belief Change](<standard-ref>)
 
 ---
 
@@ -116,7 +116,7 @@ When having a difficult conversation about beliefs:
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

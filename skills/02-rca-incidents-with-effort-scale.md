@@ -26,10 +26,10 @@ description: "Use when an RCA incident needs a reviewable first screen, design i
 ## Input Checklist (перед началом)
 
 - [ ] Есть описание симптома или фидбек пользователя (что пошло не так, что «не читается», что забыли).
-- [ ] Открыт файл инцидентов: `[todo · incidents]/ai.incidents.md`.
+- [ ] Открыт файл инцидентов: `<internal-folder>/ai.incidents.md`.
 - [ ] Понятен **канон записи в журнал**: одна секция `## DD MMM YYYY` на календарный день, внутри дня — **одна** markdown-таблица на все строки этого дня (trace и полный RCA — одна ширина колонок); см. Standard 1.1 § «Канон разметки `ai.incidents.md`». При **реструктуризации всего файла** или смене заголовка таблицы — не массово с первого прохода: протокол S0–S7 в `.agents/skills/1-next/SKILL.md` § «Шаг за шагом» + falsification по `.agents/skills/2-hypothesis-gap-falsification/SKILL.md`.
 - [ ] Выполнен precedent scan по `ai.incidents.md`: найдены похожие инциденты, прошлые design injections, reusable verdicts или честно написано, что похожих кейсов не найдено.
-- [ ] Прочитаны стандарты: [AI Incident Standard 1.1]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.1 ai incident standard 14 may 2025 0505 cet by ai assistant.md), [RCA Standard 1.6]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.6 root cause analysis 14 may 2025 0700 cet by ai assistant.md), при необходимости [Gap Theory 1.5]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.5 gap theory standard 26 august 2025 2325 CET by ilya krasinsky.md).
+- [ ] Прочитаны стандарты: [AI Incident Standard 1.1](<standard-ref>), [RCA Standard 1.6](<standard-ref>), при необходимости [Gap Theory 1.5](<standard-ref>).
 - [ ] Понятно, какой артефакт/доставка была «первой попыткой» (дейли, отчёт, сообщение в чат и т.д.).
 - [ ] Проверено, не работал ли инцидент в multi-agent режиме (2+ агентов в одном workspace / branch / worktree).
 - [ ] Проверено, виден ли lifecycle проекта в `todo.md`, `.beads` и обязательном временном `duckdb` слое.
@@ -84,7 +84,7 @@ id: ...
 - Обязательный порядок:
   1. назвать existing artifact;
   2. кратко показать standard violations;
-  3. same-turn запустить rewrite-route по `ticket_review` и [`ticket-review-update`](/Users/ilyakrasinsky/workspace/vscode.projects/heroes-pulseai-workspace/.agents/skills/1-ticket-review-update/SKILL.md);
+  3. same-turn запустить rewrite-route по `ticket_review` и [`ticket-review-update`](.agents/skills/1-ticket-review-update/SKILL.md);
   4. проверить readback из source-of-truth;
   5. только потом снова использовать его как `Текущий тикет`.
 - Запрещено:
@@ -135,8 +135,8 @@ id: ...
 
 **Где искать источник «говна» (порядок):**
 
-1. **Репо:** `rg` по `.agents/skills/`, `AGENTS.md`, `[standards .md]/`, `[todo · incidents]/` на токен аббревиатуры; зафиксировать **первый файл-ввод** (canonical source).
-2. **Трассировки в репо:** `[todo · incidents]/ai.incidents.md` → секция **Append-only trace**; при наличии — `[todo · incidents]/reasoning-logs/*.md`.
+1. **Репо:** `rg` по `.agents/skills/`, `AGENTS.md`, `<standard-ref>).
+2. **Трассировки в репо:** `<internal-folder>/ai.incidents.md` → секция **Append-only trace**; при наличии — `<internal-folder>/reasoning-logs/*.md`.
 3. **Логи Cursor (размышления / tool / MCP):** macOS — `~/Library/Application Support/Cursor/logs/` (см. [read-verify-logs-output](mdc:.agents/skills/2-read-verify-logs-output/SKILL.md)); искать строки с тем же токеном рядом с решением агента.
 
 **Design injection (обязательная):**
@@ -216,7 +216,7 @@ id: ...
   - почему этот flow относится именно к текущему JTBD-проекту.
 - Если хотя бы один из пунктов выше не доказан, live edit запрещён; статус проекта должен вернуться в `discovery / target confirmation`, а не в `partial live`.
 
-### 2.2. Widget Evidence Card для инцидентов Pulse.ai (ОБЯЗАТЕЛЬНО при `widget_id`)
+### 2.2. Widget Evidence Card для инцидентов <internal-component> (ОБЯЗАТЕЛЬНО при `widget_id`)
 
 - Если симптом/разбор содержит `widget_id`, в RCA и в повторной доставке добавить **Widget Evidence Card**:
   - `company_alias`, `app_id`, `widget_id`
@@ -298,7 +298,7 @@ id: ...
 
 - **ai.incidents.md** — источник истины для полного текста инцидента (уже добавлена запись на шаге 1).
 - После design changes именно `ai.incidents.md` должен содержать не только RCA, но и post-change verification loop: `Решение -> Что изменили -> Как проверяем гипотезу -> Когда вернуться к проверке`.
-- **Стандарт 1.13** ([AI Agent Typical Gaps and Prevention]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.13 ai agent typical gaps and prevention standard 13 feb 2026 cet by ai assistant.md)) — обновить обязательно:
+- **Стандарт 1.13** ([AI Agent Typical Gaps and Prevention](<standard-ref>)) — обновить обязательно:
   - В таблицу **«Сводка по инцидентам»** добавить или обновить строку: дата, симптом (коротко), корневая причина (коротко), дизайн-инъекция, статус.
   - Если инцидент выявил новый тип гэпа (нет в таблице «Типовые гэпы и проблемы») — добавить строку в эту таблицу: категория, типовой гэп, ожидаемое поведение, где зафиксировано (ai.incidents + дата).
 - Без обновления 1.13 работа по инциденту не считается завершённой.
@@ -317,7 +317,7 @@ id: ...
   - одной строки JTBD (зачем owner это смотрит);
   - при использовании скрипта — имени команды/скрипта и зачем он (не «из-за объёма» как единственное объяснение).
 - **Почему:** символ **§ и номер секции** легко **конфликтуют** с нумерацией в этом же skill (например, здесь **§2.2** в другом контексте = Widget Evidence Card для `widget_id`) и с другими стандартами; без path owner не может сопоставить комм с артефактом.
-- **REQUIRED:** использовать **Document Addressing Block** из skill [`hypothesis-gap-falsification`](/Users/ilyakrasinsky/workspace/vscode.projects/heroes-pulseai-workspace/.agents/skills/2-hypothesis-gap-falsification/SKILL.md) для любых «я сейчас вставляю / генерю большой блок в документ».
+- **REQUIRED:** использовать **Document Addressing Block** из skill [`hypothesis-gap-falsification`](.agents/skills/2-hypothesis-gap-falsification/SKILL.md) для любых «я сейчас вставляю / генерю большой блок в документ».
 
 ### 7. Исправить задачу и сделать новую доставку
 
@@ -392,7 +392,7 @@ id: ...
 
 ### 7.0.2. Visual Gate для UI/canvas redo (ОБЯЗАТЕЛЬНО)
 
-**RCA-источник 2026-04-16:** агент после фикса UI-инцидента (`space-ui` ClientFilterDropdown + UniversalFunnelSection) проверил результат только через `preview_eval` JSON (`duplicates: []`, `funnelBigfinCount: 15`), написал `worked`. Owner открыл глазами — canvas визуально пустой, zoom=3%, загрузка 12 минут. Redo верdict был ложный.
+**RCA-источник 2026-04-16:** агент после фикса UI-инцидента (`<internal-component>` <internal-component> + <internal-component>Section) проверил результат только через `preview_eval` JSON (`duplicates: []`, `funnelBigfinCount: 15`), написал `worked`. Owner открыл глазами — canvas визуально пустой, zoom=3%, загрузка 12 минут. Redo верdict был ложный.
 
 Для UI / canvas / layout инцидентов **`preview_eval`-only запрещён** как единственный evidence redo-цикла (hard fail). Обязательно:
 
@@ -474,7 +474,7 @@ id: ...
 
 **Если нечего поручать человеку:** одна строка **`Нет шагов для человека`** + причина (например «запрос был только анализ», «всё в merge»).
 
-**Связь с KB:** для client-facing шагов «как использовать» допускается ссылка на **Effort** из [Standard 2.8](mdc:[standards .md]/5. pulse.ai standards/2.8 pulse.ai knowledge base standard 10 january 2026 0005 cet by ai assistant.md). Колонка «усилие человека» здесь про **оператора репо / workspace**, не про клиента.
+**Связь с KB:** для client-facing шагов «как использовать» допускается ссылка на **Effort** из [Standard 2.8](mdc:<standard-ref>). Колонка «усилие человека» здесь про **оператора репо / workspace**, не про клиента.
 
 **Скиллы-дополнения:** тот же блок обязан присутствовать в финальном delivery-сообщении по [`orchestrator-delivery-bundle`](mdc:.agents/skills/3-orchestrator-delivery-bundle/SKILL.md) (см. `Delivery contract`).
 
@@ -501,7 +501,7 @@ id: ...
 - [ ] После redo явно зафиксировано, сработала гипотеза или нет на текущем кейсе (`worked / partially worked / did not work`), а не только факт повторной доставки.
 - [ ] Для runtime-инцидентов (сервис, API, UI, pipeline) redo verdict подтверждён **runtime evidence** (браузер, API-вызов, скриншот, stdout), а не только проверкой файлов (§7.0.1).
 - [ ] В чате или в отчёте явно указано: что изменено по фидбеку и что доставлено повторно.
-- [ ] При полном цикле по этому skill добавлена **одна строка** в таблицу `Append-only trace` в `[todo · incidents]/ai.incidents.md` (дата, `rca-incidents`, сжатый промт owner, целевые paths, 3–7 bullets reasoning); если файл недоступен — строка выведена в чат для ручной вставки.
+- [ ] При полном цикле по этому skill добавлена **одна строка** в таблицу `Append-only trace` в `<internal-folder>/ai.incidents.md` (дата, `rca-incidents`, сжатый промт owner, целевые paths, 3–7 bullets reasoning); если файл недоступен — строка выведена в чат для ручной вставки.
 - [ ] Для changelog / visual / announcement инцидентов повторная доставка содержит `action-ready change contract`, а не только recap.
 - [ ] Для beads-first / project-governance инцидентов повторная доставка содержит `Graph from .beads`, а не generic `Goal Map`.
 - [ ] Для beads-first / project-governance инцидентов повторная доставка semantic-first: не начинается с raw bead ids, а показывает branch -> blocker -> next output.
@@ -519,10 +519,10 @@ id: ...
 
 ## Связанные стандарты и правила
 
-- [AI Incident Standard 1.1]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.1 ai incident standard 14 may 2025 0505 cet by ai assistant.md)
-- [Root Cause Analysis Standard 1.6]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.6 root cause analysis 14 may 2025 0700 cet by ai assistant.md)
-- [Gap Theory Standard 1.5]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.5 gap theory standard 26 august 2025 2325 CET by ilya krasinsky.md)
-- [AI Agent Typical Gaps and Prevention Standard 1.13]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.13 ai agent typical gaps and prevention standard 13 feb 2026 cet by ai assistant.md) — типовые гэпы и профилактика
+- [AI Incident Standard 1.1](<standard-ref>)
+- [Root Cause Analysis Standard 1.6](<standard-ref>)
+- [Gap Theory Standard 1.5](<standard-ref>)
+- [AI Agent Typical Gaps and Prevention Standard 1.13](<standard-ref>) — типовые гэпы и профилактика
 - core-auto.mdc — TEAM-FACING MESSAGES, определения «доставили» / «написал в чат»
 - [registry-daily-digest](mdc:.agents/skills/3-registry-daily-digest/SKILL.md) — шаг 4 (review перед отправкой), оформление дейли
 - [review-artifact-for-client-readiness](mdc:.agents/skills/3-review-artifact-for-client-readiness/SKILL.md) — ревью текста с точки зрения получателя
@@ -539,7 +539,7 @@ id: ...
 ## Claim falsification before `repair complete` (MANDATORY)
 
 - Если RCA утверждает, что `repair уже сделан`, `тикет уже хороший`, `skill уже работает`, `workflow уже зелёный`, нужно прогнать отдельный falsification-pass по skill
-  [`hypothesis-gap-falsification`](/Users/ilyakrasinsky/workspace/vscode.projects/heroes-pulseai-workspace/.agents/skills/2-hypothesis-gap-falsification/SKILL.md).
+  [`hypothesis-gap-falsification`](.agents/skills/2-hypothesis-gap-falsification/SKILL.md).
 - Обязательный маршрут: `Проверяемая гипотеза -> Ожидаемое состояние -> Собранные факты -> Gap table -> Gap count -> Falsification verdict -> Новая рабочая гипотеза -> План действий`.
 - Если остаётся хотя бы один core gap, писать `repair complete` запрещено.
 - Если оказалось, что continuity, bead, script или support artifact были выдуманы, RCA обязан:
@@ -629,7 +629,7 @@ id: ...
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

@@ -7,7 +7,7 @@ description: "Use when calculating and reporting trust level in AI agent. Tracks
 
 **Skill Type:** Core metric, protocol integration
 **When to Use:** Session start, after completing work, after user correction/steering, when documenting incidents; whenever OUTPUT/OUTCOME STATUS is written
-**Based on:** [core-auto.mdc](.cursor/rules/core-auto.mdc), [next](/Users/ilyakrasinsky/workspace/vscode.projects/heroes-pulseai-workspace/.claude/skills/1-next/SKILL.md), RCA, Root Cause Analysis — анализ корневых причин incidents from workspace canon
+**Based on:** [core-auto.mdc](.cursor/rules/core-auto.mdc), [next](.claude/skills/1-next/SKILL.md), RCA, Root Cause Analysis — анализ корневых причин incidents from workspace canon
 
 ---
 
@@ -111,7 +111,7 @@ Trust: [100 − сумма] = [X] единиц
 
 - [core-auto.mdc](.cursor/rules/core-auto.mdc) — OUTPUT/OUTCOME, Confidence
 - [core-check.mdc](.cursor/rules/core-check.mdc) — Confidence Calibration Matrix
-- [next](/Users/ilyakrasinsky/workspace/vscode.projects/heroes-pulseai-workspace/.claude/skills/1-next/SKILL.md) — gap, outcome, HADI
+- [next](.claude/skills/1-next/SKILL.md) — gap, outcome, HADI
 - `rca-incidents` from workspace canon — инциденты
 - `champion-playbook-gap-theory-agent` from workspace canon — Effort₁, Effort₂, gap types
 
@@ -142,7 +142,7 @@ Trust: [100 − сумма] = [X] единиц
 
 2. Записать строку в `ai.incidents.md` таблица.
 
-3. При задачах > 3 ходов — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. При задачах > 3 ходов — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным.
 

@@ -18,7 +18,7 @@ description: "Use when starting a session or planning next steps and you need ou
 - **From-the-end chain:** сначала `outcome (какая польза и что изменится в процессе людей/команды) -> output (какой артефакт это докажет) -> blockers/constraints -> минимальная критическая цепочка`
 - **HADI-цикл** (Hypothesis → Action → Data → Insights): план → уточнение по новым вводным → доделать → запустить код → проверить гипотезу → скорректировать план по реальным данным (outcome ожидаемый − outcome фактический)
 
-**Based on:** [core-auto.mdc](.cursor/rules/core-auto.mdc) (OUTPUT / OUTCOME TRACKING, ITERATIVE DEVELOPMENT, REFLECTION CHECKPOINTS), [core-next.mdc](.cursor/rules/core-next.mdc) (план → auto → check → clean → next actions), [From-The-End 1.4]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.4 from-the-end.process.checkilst.md) (критическая цепочка = последовательность зависимых задач, минимизация простоя), [Standard 5.30]([standards .md]/5. pulse.ai standards/5.30 rick growth autopilot strategy standard 15 feb 2026 cet by ai assistant.md) (п. 12.4 минимальная критическая цепочка DBR, Drum-Buffer-Rope — барабан-буфер-канат по Голдрату), [SGR 2.9]([standards .md]/3. scenarium · jtbd · hipothises · offering · tone/2.9 sgr jtbd offer writer standard 29 jan 2025 0000 cet by ai assistant.md) (schema-guided шаги к outcome).
+**Based on:** [core-auto.mdc](.cursor/rules/core-auto.mdc) (OUTPUT / OUTCOME TRACKING, ITERATIVE DEVELOPMENT, REFLECTION CHECKPOINTS), [core-next.mdc](.cursor/rules/core-next.mdc) (план → auto → check → clean → next actions), [From-The-End 1.4](<standard-ref>) (критическая цепочка = последовательность зависимых задач, минимизация простоя), [Standard 5.30](<standard-ref>) (п. 12.4 минимальная критическая цепочка DBR, Drum-Buffer-Rope — барабан-буфер-канат по Голдрату), [SGR 2.9](<standard-ref>) (schema-guided шаги к outcome).
 
 ---
 
@@ -244,7 +244,7 @@ When delivery depends on two operations/paths (for example A=raw workflow, B=int
 
 ## Принцип «Шаг за шагом» (Goldratt): миграция документов и массовые правки
 
-**Когда применять:** реструктуризация больших markdown-файлов (`changelog.md`, `[todo · incidents]/ai.incidents.md`, реестры), выравнивание **одной** markdown-таблицы на календарный день (см. Standard 1.1 § канон `ai.incidents.md`), любой сценарий, где ошибка масштаба = потеря фактов или поломка парсеров.
+**Когда применять:** реструктуризация больших markdown-файлов (`changelog.md`, `<internal-folder>/ai.incidents.md`, реестры), выравнивание **одной** markdown-таблицы на календарный день (см. Standard 1.1 § канон `ai.incidents.md`), любой сценарий, где ошибка масштаба = потеря фактов или поломка парсеров.
 
 **Канон `ai.incidents.md` (и аналогичные дневные журналы):** файл начинается с общего введения; дальше **одна секция уровня `##` на календарный день** (например `## 5 Apr 2026`), краткий текст дня при необходимости, затем **ровно одна** markdown-таблица на этот день. Все события этого дня (короткий trace и полный RCA) — **строки одной и той же таблицы** с **одинаковым заголовком** (одинаковое число колонок). Новые строки добавляются **сверху** таблицы дня (как сейчас по смыслу append-only внутри дня). Старые длинные блоки под `## 5 Apr 2026 — …` **переносятся** в строки таблицы этого же дня; подзаголовок дня может остаться как **человекочитаемый тезис** в колонке `title` или в первой строке секции, но не как вторая параллельная таблица с другой шириной.
 
@@ -265,7 +265,7 @@ When delivery depends on two operations/paths (for example A=raw workflow, B=int
 
 **Запрещено:** прыгать сразу к «переписать весь файл», если не пройдены S1–S3. **Разрешено:** хранить длинный текст в одной ячейке с явным правилом переносов (например HTML `<br>` в GitHub-flavored таблицах) или вынести «хвост» в `reasoning-logs` с **обязательной** колонкой `detail_path` в **той же строке** дневной таблицы.
 
-**Где ещё зафиксирована та же идея (критическая цепочка / Голдрат):** Standard [1.4 From-The-End]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.4 from-the-end.process.checkilst.md), [1.7 Goldratt]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.7 goldratt standard 15 may 2025 2100 cet by ai assistant.md), [1.13]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.13 ai agent typical gaps and prevention standard 13 feb 2026 cet by ilya krasinsky.md) (строка про critical chain loss), [1.6 RCA]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.6 root cause analysis 14 may 2025 0700 cet by ai assistant.md) (TOC), [AI Incident 1.1]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.1 ai incident standard 14 may 2025 0505 cet by ai assistant.md) § канон `ai.incidents.md`, `.agents/skills/2-rca-incidents/SKILL.md`, `.agents/skills/1-task-completion-persistence/SKILL.md`, при необходимости ссылка из `.cursor/rules/core-auto.mdc` (Domain / planning).
+**Где ещё зафиксирована та же идея (критическая цепочка / Голдрат):** Standard [1.4 From-The-End](<standard-ref>), [1.7 Goldratt](<standard-ref>), [1.13](<standard-ref>) (строка про critical chain loss), [1.6 RCA](<standard-ref>) (TOC), [AI Incident 1.1](<standard-ref>) § канон `ai.incidents.md`, `.agents/skills/2-rca-incidents/SKILL.md`, `.agents/skills/1-task-completion-persistence/SKILL.md`, при необходимости ссылка из `.cursor/rules/core-auto.mdc` (Domain / planning).
 
 **Связка с HADI:** каждая ступень = один цикл HADI; Insights следующей ступени зависят от факта «Δ по полям = 0».
 
@@ -341,23 +341,23 @@ When delivery depends on two operations/paths (for example A=raw workflow, B=int
 
 ---
 
-## Supabase: только pulseai чаты
+## Supabase: только <internal-component> чаты
 
-**Цель:** В Supabase в таблице чатов остаются только чаты Pulse.ai (клиенты, advising, внутренние), а не все диалоги аккаунта.
+**Цель:** В Supabase в таблице чатов остаются только чаты <internal-component> (клиенты, advising, внутренние), а не все диалоги аккаунта.
 
 **Что делаем (по скиллу next и todo):**
 
-1. **Синк в одну таблицу `telegram_chats` только pulseai:** запускать синк с фильтром по ключевому слову, чтобы в БД писались только подходящие чаты:
-   - `python -m praxis_platform.heroes_telegram_mcp.scripts.sync_telegram_chats_to_supabase --keyword "pulse.ai"` (для индекса по чатам Pulse.ai);
-   - для advising (индекс Лизы): `--profile lisa --keyword "pulse.ai"`.
-   Если раньше синкали все чаты, то чтобы «остались только pulseai»: либо (a) очистить `telegram_chats` и заново прогнать синк с `--keyword "pulse.ai"`, либо (b) ввести вторую таблицу и использовать только её для поиска (см. ниже).
+1. **Синк в одну таблицу `telegram_chats` только <internal-component>:** запускать синк с фильтром по ключевому слову, чтобы в БД писались только подходящие чаты:
+   - `python -m <internal-component>.heroes_telegram_mcp.scripts.sync_telegram_chats_to_supabase --keyword "<internal-component>"` (для индекса по чатам <internal-component>);
+   - для advising (индекс Лизы): `--profile lisa --keyword "<internal-component>"`.
+   Если раньше синкали все чаты, то чтобы «остались только <internal-component>»: либо (a) очистить `telegram_chats` и заново прогнать синк с `--keyword "<internal-component>"`, либо (b) ввести вторую таблицу и использовать только её для поиска (см. ниже).
 
-2. **Две таблицы (ik_telegram_chats / rick_telegram_chats):** по миграции и README (`praxis_platform/heroes_telegram_mcp/README.md` § «Таблицы Supabase (SupaBase databases): ik_telegram_chats и rick_telegram_chats»):
+2. **Две таблицы (ik_telegram_chats / rick_telegram_chats):** по миграции и README (`<internal-component>/heroes_telegram_mcp/README.md` § «Таблицы Supabase (SupaBase databases): ik_telegram_chats и rick_telegram_chats»):
    - **ik_telegram_chats** — полная выгрузка всех чатов IK;
-   - **rick_telegram_chats** — подмножество только Pulse.ai (по `telegram-chats-index.md` § 2.1–2.7, segment: advising, pilot, dogovorennosti, na_soprovozhdenii, partners, internal).
-   Заполнение **rick_telegram_chats:** вставить из `ik_telegram_chats` только строки, относящиеся к Pulse.ai (по `chat_title`/`chat_username` или по списку chat_id из индекса), проставить `segment`. Поиск и выгрузка сообщений — по `rick_telegram_chats` (WHERE segment = 'advising' и т.д.). Тогда «в Supabase только pulseai чаты» = использование для lookup именно `rick_telegram_chats`.
+   - **rick_telegram_chats** — подмножество только <internal-component> (по `telegram-chats-index.md` § 2.1–2.7, segment: advising, pilot, dogovorennosti, na_soprovozhdenii, partners, internal).
+   Заполнение **rick_telegram_chats:** вставить из `ik_telegram_chats` только строки, относящиеся к <internal-component> (по `chat_title`/`chat_username` или по списку chat_id из индекса), проставить `segment`. Поиск и выгрузка сообщений — по `rick_telegram_chats` (WHERE segment = 'advising' и т.д.). Тогда «в Supabase только <internal-component> чаты» = использование для lookup именно `rick_telegram_chats`.
 
-**Итого по next:** при задаче «в supabase только pulseai чаты» — либо синк с `--keyword "pulse.ai"` в `telegram_chats` (и при необходимости предварительная очистка), либо схема с двумя таблицами и заполнение `rick_telegram_chats` из индекса; см. также [rick-ai-telegram-chats-export.todo.md]([todo · incidents]/rick-ai-telegram-chats-export.todo.md) и [telegram-mcp-laba-deployment.todo.md]([todo · incidents]/telegram-mcp-laba-deployment.todo.md).
+**Итого по next:** при задаче «в supabase только <internal-component> чаты» — либо синк с `--keyword "<internal-component>"` в `telegram_chats` (и при необходимости предварительная очистка), либо схема с двумя таблицами и заполнение `rick_telegram_chats` из индекса; см. также [rick-ai-telegram-chats-export.todo.md](<internal-folder>/rick-ai-telegram-chats-export.todo.md) и [telegram-mcp-laba-deployment.todo.md](<internal-folder>/telegram-mcp-laba-deployment.todo.md).
 
 ---
 
@@ -397,7 +397,7 @@ When delivery depends on two operations/paths (for example A=raw workflow, B=int
 | {UTC timestamp} | {skills} | {owner prompt ≤240} | {steering?} | {target artifact} | {reasoning bullets} | {blocking_instruction} | … |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

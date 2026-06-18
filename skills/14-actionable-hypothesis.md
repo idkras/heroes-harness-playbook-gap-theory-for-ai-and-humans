@@ -1,13 +1,13 @@
 ---
 
 name: actionable-hypothesis
-description: "Use when analyzing Pulse.ai widgets, reports, or any analytical data to generate structured hypotheses (0th hypothesis + alternatives) with verdicts (confirmed/rejected/to be tested). Based on SGR JTBD Offer Writer 2.9 and Hypothesis Standard. Use when user says \"сформулируй гипотезу\", \"что значат эти данные\", \"гипотеза по виджету\", \"альтернативные объяснения\", \"generate hypothesis from widget data\"."
+description: "Use when analyzing <internal-component> widgets, reports, or any analytical data to generate structured hypotheses (0th hypothesis + alternatives) with verdicts (confirmed/rejected/to be tested). Based on SGR JTBD Offer Writer 2.9 and Hypothesis Standard. Use when user says \"сформулируй гипотезу\", \"что значат эти данные\", \"гипотеза по виджету\", \"альтернативные объяснения\", \"generate hypothesis from widget data\"."
 ---
 
 # 🎯 Actionable Hypothesis Skill
 
 **Skill Type:** Analysis & Reporting
-**When to Use:** When analyzing Pulse.ai widgets, reports, or any analytical data to generate hypotheses and alternative explanations
+**When to Use:** When analyzing <internal-component> widgets, reports, or any analytical data to generate hypotheses and alternative explanations
 **Based on:** [SGR JTBD Offer Writer Standard](abstract://standard:sgr_jtbd_offer_writer_standard), версия 2.9, [Hypothesis Standard](abstract://standard:hypothesis_standard), [RCA Standard](abstract://standard:root_cause_analysis_standard)
 
 ---
@@ -16,13 +16,13 @@ description: "Use when analyzing Pulse.ai widgets, reports, or any analytical da
 
 Generate actionable hypotheses (0th hypothesis and alternatives) from analytical data, following the format from Figma design template.
 
-**JTBD, Jobs To Be Done:** When analyzing Pulse.ai widgets or reports, I want to generate structured hypotheses with verdicts (confirmed/rejected/to be tested) and alternative explanations, so that clients can immediately see conclusions in the header and understand what needs to be verified.
+**JTBD, Jobs To Be Done:** When analyzing <internal-component> widgets or reports, I want to generate structured hypotheses with verdicts (confirmed/rejected/to be tested) and alternative explanations, so that clients can immediately see conclusions in the header and understand what needs to be verified.
 
 ---
 
 ## 🧷 PraxisGPT landing review: гипотеза = тизер приёма, не саммари
 
-**Когда:** документ — ревью лендинга по [PraxisGPT Landing Analysis Standard v1.8](mdc:[standards .md]/6. advising · review · supervising/2.0 🤖 PraxisGPT Landing Analysis Standard v1.8.md) (или тот же смысл в заголовках секций).
+**Когда:** документ — ревью лендинга по [PraxisGPT Landing Analysis Standard v1.8](mdc:<standard-ref>) (или тот же смысл в заголовках секций).
 
 **Формула:** в **`Гипотеза:`** писать **не narrative-саммари**, а **тизер** — одна строка **активирующего знания**: какой **приём / техника / рычаг** (из decision psychology, копирайтинга, UX) и **узкий тезис** о том, что сделано на странице.
 
@@ -211,7 +211,7 @@ Based on the Figma design template, the hypothesis format should be:
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

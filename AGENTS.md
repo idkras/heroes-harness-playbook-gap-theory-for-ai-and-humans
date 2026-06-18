@@ -68,7 +68,7 @@ See `agents/` folder for canonical definitions.
 
 ## Anonymization policy
 
-This repo uses anonymized client names (galaxypets, autovin, fashionhub, sleepwell, designcraft, fitcrew, bigfin, tempest, pulse.ai, praxis platform). When contributing examples:
+This repo uses anonymized client names (<client>, <client>, <client>, <client>, designcraft, fitcrew, bigfin, tempest, <internal-component>, praxis platform). When contributing examples:
 
 - Use anonymized similar-domain names (don't expose real client identities)
 - Preserve subject area (auto B2B, fashion ecom, mattress retail, etc.) so readers can map to their context

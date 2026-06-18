@@ -151,7 +151,7 @@ description: "Use when a claim, repair, rollout, RCA, ticket, skill, or workflow
 
 ### 2.5.1. Visual Gate (ОБЯЗАТЕЛЬНО для UI/canvas/layout-гипотез)
 
-**RCA-источник:** инцидент 2026-04-16 `space-ui ClientFilterDropdown + UniversalFunnelSection` — агент проверил UI только через `preview_eval` (JSON-числа: `duplicates: []`, `funnelBigfinCount: 15`, `persistedClient: 'designcraftschool-online'`), написал «confirmed, всё работает, ship-ready». Owner открыл `localhost:3013` глазами — **canvas визуально пустой**, zoom=0.03 (3%), загрузка ~12 минут, empty-widget Designcraft невидим физически. Гипотеза **falsified** по всем визуальным осям. Корневая причина: агент проверял **собственные данные своими же DOM-запросами** → самоподтверждающаяся петля, которая не видит zoom, overlapping, contrast, typography, layout shift.
+**RCA-источник:** инцидент 2026-04-16 `<internal-component> <internal-component> + <internal-component>Section` — агент проверил UI только через `preview_eval` (JSON-числа: `duplicates: []`, `funnelBigfinCount: 15`, `persistedClient: '<client>-online'`), написал «confirmed, всё работает, ship-ready». Owner открыл `localhost:3013` глазами — **canvas визуально пустой**, zoom=0.03 (3%), загрузка ~12 минут, empty-widget Designcraft невидим физически. Гипотеза **falsified** по всем визуальным осям. Корневая причина: агент проверял **собственные данные своими же DOM-запросами** → самоподтверждающаяся петля, которая не видит zoom, overlapping, contrast, typography, layout shift.
 
 **Правило:** для UI/UX/canvas/layout-гипотез `preview_eval`-only НЕДОПУСТИМ как evidence. Обязательно:
 
@@ -326,10 +326,10 @@ Gap count
 
 Перед тем как в чате написать «вставляю раздел», «добавляю §…», «через скрипт из‑за объёма» или любой аналог, показать блок **из четырёх строк**:
 
-1. **Файл (repo path):** абсолютный или от корня репо, например `[heroes-gpt-bot]/clients/produp.pro/premiya-produp-ILYA-review-and-Nadya-memo-2026-04-05.md`
+1. **Файл (repo path):** абсолютный или от корня репо, например `<internal-folder>/clients/<client>.pro/premiya-<client>-ILYA-review-and-Nadya-memo-2026-04-05.md`
 2. **Секция как в файле:** точный заголовок Markdown (`## …` / `### …`), не только «§2.2» — например `### 2.2 Карточки «пруф + цитаты + логика баллов»`
 3. **JTBD одной строкой:** зачем owner это читает / что решаем
-4. **Пример соседнего артефакта** (если уместно): папка или 1 файл для контекста, например `premiya-produp-linked-docs/…`
+4. **Пример соседнего артефакта** (если уместно): папка или 1 файл для контекста, например `premiya-<client>-linked-docs/…`
 
 **FORBIDDEN в operator comms:**
 
@@ -343,9 +343,9 @@ Gap count
 После построения gap table (или в том же ходе до финального ответа):
 
 1. **В чат** — блок `### Execution trace` с датой (UTC или локальная с явной зоной), 3–7 bullets: *что решил → какой файл открыл/команду запустил → какой факт получил → какой gap выявлен*.
-2. **В файл** `[todo · incidents]/ai.incidents.md` — добавить **одну строку** в таблицу секции `## Append-only trace: skill runs & owner prompts (gap-hunting)`:
+2. **В файл** `<internal-folder>/ai.incidents.md` — добавить **одну строку** в таблицу секции `## Append-only trace: skill runs & owner prompts (gap-hunting)`:
    - колонки: дата, `hypothesis-gap-falsification`, сжатый текст запроса owner (≤240 символов), целевой path + H2/H3 если есть, краткий reasoning log (можно через `; `).
-3. **Опционально** — если выявлен **системный** долг без отдельного RCA (например «нужна автоматизация каждого промта»), одна строка в `[todo · incidents]/ai.legacy.md` по контракту таблицы там; в trace можно сослаться `see ai.legacy`.
+3. **Опционально** — если выявлен **системный** долг без отдельного RCA (например «нужна автоматизация каждого промта»), одна строка в `<internal-folder>/ai.legacy.md` по контракту таблицы там; в trace можно сослаться `see ai.legacy`.
 
 Если правка `ai.incidents.md` невозможна (read-only sandbox), явно написать в чат: блок trace всё равно обязателен + строка для ручной вставки owner.
 
@@ -466,7 +466,7 @@ Gap count
 
 2. Записать строку в `ai.incidents.md` таблица.
 
-3. При задачах > 3 ходов — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. При задачах > 3 ходов — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным.
 

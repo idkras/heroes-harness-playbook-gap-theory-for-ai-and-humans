@@ -12,7 +12,7 @@ description: "Use when a large multi-step task must be completed to handoff-read
 
 **Связано:** [core-auto.mdc](.cursor/rules/core-auto.mdc) (OUTPUT / OUTCOME TRACKING, ITERATIVE DEVELOPMENT, REFLECTION CHECKPOINTS), [core-check.mdc](.cursor/rules/core-check.mdc) (OUTPUT VERIFICATION, GAP ANALYSIS, CHALLENGE PROTOCOL), [review-artifact-for-client-readiness](.agents/skills/3-review-artifact-for-client-readiness/SKILL.md) (готовность к передаче клиенту / команде).
 
-Формализм качества: [Outcome Zero-Gap JTBD Transfer Standard 1.6]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.6 outcome zero-gap jtbd transfer standard 21 feb 2026 cet by ai assistant.md).
+Формализм качества: [Outcome Zero-Gap JTBD Transfer Standard 1.6](<standard-ref>).
 
 ---
 
@@ -98,7 +98,7 @@ description: "Use when a large multi-step task must be completed to handoff-read
   - какую гипотезу изменения проверяет.
 - Первую подзадачу взять в работу; остальные — pending.
 - При появлении обратной связи «мало» — добавить подзадачу «Расширить артефакт до переносимой выжимки по стандартам A, B и скиллу C» и выполнить её.
-- Если задача — **миграция или смена схемы** `[todo · incidents]/ai.incidents.md` (или другого большого дневного журнала): критическая цепочка = сначала доказать сохранение полей на малых N; следовать `.agents/skills/1-next/SKILL.md` § «Шаг за шагом» (S0–S7) и `.agents/skills/2-hypothesis-gap-falsification/SKILL.md`; канон «день → одна таблица» — [AI Incident Standard 1.1]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.1 ai incident standard 14 may 2025 0505 cet by ai assistant.md) § «Канон разметки».
+- Если задача — **миграция или смена схемы** `<internal-folder>/ai.incidents.md` (или другого большого дневного журнала): критическая цепочка = сначала доказать сохранение полей на малых N; следовать `.agents/skills/1-next/SKILL.md` § «Шаг за шагом» (S0–S7) и `.agents/skills/2-hypothesis-gap-falsification/SKILL.md`; канон «день → одна таблица» — [AI Incident Standard 1.1](<standard-ref>) § «Канон разметки».
 
 ### Шаг 2. Собрать недостающее из первоисточников
 
@@ -126,9 +126,9 @@ description: "Use when a large multi-step task must be completed to handoff-read
 
 - Обновить OUTPUT/OUTCOME STATUS в чате: что доставлено, какой артефакт, ссылка/путь.
 - Кратко описать, что сделано для «отчуждения» (какие таблицы/процедуры/алгоритм добавлены).
-- Если менялся `praxis_platform/pulseai_mcp/`: до сдачи обязательно прогнать real-data gate (`make pulseai-mcp-dev-gate` или команды из `.agents/skills/4-pulseai-mcp-real-data-gate/SKILL.md`) и приложить результат.
-- Для `praxis_platform/pulseai_mcp/`: в конце ответа обязателен `### Real Data Evidence` с код-блоками команд и JSON-результата; без evidence задача не считается завершённой.
-- Для `praxis_platform/pulseai_mcp/`: обязателен `### Outcome Zero-Gap Evidence` с полями `functional_gap_score_zero_is_best`, `user_effort_steps_required_after_automation_zero_is_best`, `handoff_readiness_score_one_is_best`, `behavior_change_ratio_compared_to_manual_process`, `estimated_fix_cost_points_zero_is_best`, `delivery_quality_proxy_score_one_is_best`, `real_data_export_success_rate_one_is_best` (1 = лучший / perfect).
+- Если менялся `<internal-component>/<internal-component>_mcp/`: до сдачи обязательно прогнать real-data gate (`make <internal-component>-mcp-dev-gate` или команды из `.agents/skills/4-<internal-component>-mcp-real-data-gate/SKILL.md`) и приложить результат.
+- Для `<internal-component>/<internal-component>_mcp/`: в конце ответа обязателен `### Real Data Evidence` с код-блоками команд и JSON-результата; без evidence задача не считается завершённой.
+- Для `<internal-component>/<internal-component>_mcp/`: обязателен `### Outcome Zero-Gap Evidence` с полями `functional_gap_score_zero_is_best`, `user_effort_steps_required_after_automation_zero_is_best`, `handoff_readiness_score_one_is_best`, `behavior_change_ratio_compared_to_manual_process`, `estimated_fix_cost_points_zero_is_best`, `delivery_quality_proxy_score_one_is_best`, `real_data_export_success_rate_one_is_best` (1 = лучший / perfect).
 
 ### Шаг 7. Unified Delivery в чат (обязательный)
 
@@ -206,7 +206,7 @@ description: "Use when a large multi-step task must be completed to handoff-read
 - [x] Пример вопрос -> подходящие виджеты (top-N с score/reasons)
 ```
 
-Для Pulse.ai / widget / report задач рекомендуемый дополнительный шаблон:
+Для <internal-component> / widget / report задач рекомендуемый дополнительный шаблон:
 
 ```md
 ### Widget / Query metadata
@@ -295,7 +295,7 @@ description: "Use when a large multi-step task must be completed to handoff-read
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

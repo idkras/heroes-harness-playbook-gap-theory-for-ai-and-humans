@@ -26,19 +26,19 @@ This skill prevents creation of unnecessary documents by enforcing the "NO NEW D
    - If updating existing document → ✅ ALLOWED
    - Otherwise → Check prohibited patterns
 
-1.5. **Check Client Folder Path** (RCA 2026-04-17 — pulseai folder enforcement):
+1.5. **Check Client Folder Path** (RCA 2026-04-17 — <internal-component> folder enforcement):
 
-   **Триггер:** путь содержит `[pulse.ai]/clients/all-clients/{alias}/` или `[projects]/heroes-space-ui/pulseai-space-ui/public/data/clients/{alias}/`.
+   **Триггер:** путь содержит `[<internal-component>]/clients/all-clients/{alias}/` или `<internal-folder>/heroes-<internal-component>/<internal-component>-<internal-component>/public/data/clients/{alias}/`.
 
-   Читай canonical tree из **Standard 4.6 v1.1** (`[standards .md]/5. pulse.ai standards/4.6 pulseai cursor folder structure standard.md` строки 116-138) и проверь target path:
+   Читай canonical tree из **Standard 4.6 v1.1** (`<standard-ref>) и проверь target path:
 
-   **Canonical slots в `[pulse.ai]/clients/all-clients/{alias}/`:**
+   **Canonical slots в `[<internal-component>]/clients/all-clients/{alias}/`:**
    - `{alias}.rick.context.md` (ровно один — canonical context)
    - `{alias}.todo.md` (project todo по Standard 0.1)
    - `business_units_settings_latest.json` + опционально `business_units_settings_{timestamp}.json` в `sync/`, НЕ в корне
    - `knowledge-base/{task_id}-{requester}-{type}-{topic}/` — KB файлы по JTBD
    - `projects/{bead_id}-{jtbd_short}/` — артефакты проектов
-   - `{app_name}_{app_id}/bronze/` и `/silver/` и `/gold/` — data layers
+   - `{app_name}_{app_id}/<layer>/` и `/<layer>/` и `/<layer>/` — data layers
    - `scenario-folder/` — legacy scenario cache (ingest-only)
    - `sync/` — legacy export mirror (не писать напрямую)
 
@@ -48,9 +48,9 @@ This skill prevents creation of unnecessary documents by enforcing the "NO NEW D
    - ❌ `clickhouse/`, `analysis/`, `research/`, `data/` новые top-level folders (не из canonical template)
    - ❌ Timestamped копии `business_units_settings_YYYYMMDD_HHMMSS.json` в корне — только `_latest.json` в корне, остальные в `sync/`
 
-   **Для `[projects]/.../public/data/clients/{alias}/`:**
+   **Для `<internal-folder>/.../public/data/clients/{alias}/`:**
    - ✅ ALLOWED: `funnel.json`, `funnel.v5.json`, `events_flat.parquet`, `funnel_stage_mapping.json`, `index.json` (manifest)
-   - ❌ PROHIBITED: дубли bronze данных (например `event_params_keys.json` если уже есть в `[pulse.ai]/.../bronze/`) — лучше symlink/ref
+   - ❌ PROHIBITED: дубли bronze данных (например `event_params_keys.json` если уже есть в `[<internal-component>]/.../<layer>/`) — лучше symlink/ref
    - ❌ PROHIBITED: client-specific schemas (`funnel.graphql.v5.json` если другие клиенты используют `funnel.v5.json`) — унифицируй имя
 
    **Response format при нарушении:**
@@ -66,7 +66,7 @@ This skill prevents creation of unnecessary documents by enforcing the "NO NEW D
 
    **§1.5.1 Context filename rule (RCA 2026-04-17 — duplicate .context.md):**
    - Canonical: `{alias}.rick.context.md` (из Standard 2.3 строка 41 **после унификации P1.1**)
-   - PROHIBITED: `{domain}.context.md` без `.rick` (6 known rogues на 17 Apr 2026: designcraft, galaxypets, evaai, fashionhub, elyts, greatrvtrip)
+   - PROHIBITED: `{domain}.context.md` без `.rick` (6 known rogues на 17 Apr 2026: designcraft, <client>, evaai, <client>, elyts, greatrvtrip)
    - Если target path = `*.context.md` без `.rick` — reject, предложи правильное имя
 
 2. **Check Prohibited Patterns**:
@@ -92,12 +92,12 @@ This skill prevents creation of unnecessary documents by enforcing the "NO NEW D
    - Write to chat: "✅ ALLOWED: Creating [filename] (reason: [exception type])"
    - Proceed with creation
 
-6. **JTBD, Jobs To Be Done Scenario Naming (Pulse.ai KB / client folders)** — при создании документов в:
-   - `[pulse.ai] knowledge base offers-jtbd-scenario-checklists/` или подпапках
-   - `[pulse.ai]/clients/all-clients/{client}/` или подпапках
+6. **JTBD, Jobs To Be Done Scenario Naming (<internal-component> KB / client folders)** — при создании документов в:
+   - `[<internal-component>] knowledge base offers-jtbd-scenario-checklists/` или подпапках
+   - `[<internal-component>]/clients/all-clients/{client}/` или подпапках
    - **ЗАПРЕЩЕНО:** `README.md` в папке сценария
    - **ОБЯЗАТЕЛЬНО:** имя файла = имя папки сценария (например: `when asked of ecommerce product category funnel conversion.md`)
-   - См. [Pulse.ai Knowledge Base Standard 2.8]([standards .md]/5. pulse.ai standards/2.8 pulse.ai knowledge base standard 10 january 2026 0005 cet by ai assistant.md), [Pulse.ai Jobs To Be Done Scenarium 2.4]([standards .md]/5. pulse.ai standards/2.4 pulse.ai jtbd scenarium · offers · widgets · .md)
+   - См. [<internal-component> Knowledge Base Standard 2.8](<standard-ref>), [<internal-component> Jobs To Be Done Scenarium 2.4](<standard-ref>)
 
 ## Output Format
 
@@ -176,7 +176,7 @@ Output:
 
 2. Записать строку в `ai.incidents.md` таблица.
 
-3. При задачах > 3 ходов — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. При задачах > 3 ходов — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным.
 

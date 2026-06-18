@@ -7,7 +7,7 @@ logical_id: standard:champion_playbook_gap_theory_agent
 updated: 16 February 2026, 12:00 CET by AI Assistant
 previous version: 1.0 (15 February 2026, 12:00 CET)
 based on: [Task Master Standard](abstract://standard:task_master_standard), [Gap Theory Standard 1.5](abstract://standard:gap_theory_standard), [Registry Standard](abstract://standard:registry_standard)
-integrated: [Gap Theory Standard 1.5]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.5 gap theory standard 26 august 2025 2325 CET by ilya krasinsky.md), [Protocol Cohesion](abstract://standard:protocol_cohesion), GDEM (Gap Dynamics Energy Model)
+integrated: [Gap Theory Standard 1.5](<standard-ref>), [Protocol Cohesion](abstract://standard:protocol_cohesion), GDEM (Gap Dynamics Energy Model)
 version: 1.1
 status: Active
 tags: standard, gap-theory, champion, change-agent, telegram-bot, socratic-dialogue, effort-landscape, GDEM, attractors, sinks, topology
@@ -739,7 +739,7 @@ Lever(I) = (Δḡ_root + ΔCascade) / (Energy_cost(I) + Coordination_cost(I))
 
 ## 🎯 Output и доставка
 
-- **Стандарт:** путь к файлу в `[standards .md]/6. advising · review · supervising/`
+- **Стандарт:** путь к файлу в `<standard-ref>
 - **Skill:** `.claude/skills/7-champion-playbook-gap-theory-agent/SKILL.md` — операционализация для Telegram-агента
 - **Подтверждение:** Human-author review перед финализацией (standards-create-update-review)
 

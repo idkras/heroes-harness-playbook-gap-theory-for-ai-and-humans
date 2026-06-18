@@ -42,13 +42,13 @@ description: "Use when a change to the system (skill, protocol, AGENTS.md rule, 
 
 | M-ID | Метрика | Источник | Ideal |
 | --- | --- | --- | --- |
-| `M01 — functional_gap_score` | `evaluate_outcome_zero_gap.py` → `functional_gap_score_zero_is_best` | praxis_platform/pulseai_mcp/scripts/ | 0 |
-| `M02 — user_effort_steps` | `evaluate_outcome_zero_gap.py` → `user_effort_steps_required_after_automation_zero_is_best` | praxis_platform/pulseai_mcp/scripts/ | 0 |
-| `M03 — handoff_readiness` | `evaluate_outcome_zero_gap.py` → `handoff_readiness_score_one_is_best` | praxis_platform/pulseai_mcp/scripts/ | 1 |
+| `M01 — functional_gap_score` | `evaluate_outcome_zero_gap.py` → `functional_gap_score_zero_is_best` | <internal-component>/<internal-component>_mcp/scripts/ | 0 |
+| `M02 — user_effort_steps` | `evaluate_outcome_zero_gap.py` → `user_effort_steps_required_after_automation_zero_is_best` | <internal-component>/<internal-component>_mcp/scripts/ | 0 |
+| `M03 — handoff_readiness` | `evaluate_outcome_zero_gap.py` → `handoff_readiness_score_one_is_best` | <internal-component>/<internal-component>_mcp/scripts/ | 1 |
 | `M04 — gaps_found_count` | `2-hypothesis-gap-falsification` → gap table row count (severity ≥ 3) | Manual count | 0 |
 | `M05 — incidents_regression` | Новые записи в `ai.incidents.md` после изменения | grep count | 0 |
 | `M06 — eval_pass_rate` | skill-creator `grading.json` → pass count / total | skill-creator agents/grader | 1.0 |
-| `M07 — delivery_quality` | `evaluate_outcome_zero_gap.py` → `delivery_quality_proxy_score_one_is_best` | praxis_platform/pulseai_mcp/scripts/ | 1 |
+| `M07 — delivery_quality` | `evaluate_outcome_zero_gap.py` → `delivery_quality_proxy_score_one_is_best` | <internal-component>/<internal-component>_mcp/scripts/ | 1 |
 | `M08 — operator_effort_0_5` | `усилие человека (0–100)` из таблицы ожиданий (среднее) | 2-hypothesis-gap-falsification | 0 |
 | `M09 — custom` | Любая кастомная метрика, описанная в таблице гипотез | Описать source | Описать target |
 

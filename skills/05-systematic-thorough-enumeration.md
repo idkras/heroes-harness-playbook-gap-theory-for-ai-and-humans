@@ -148,7 +148,7 @@ description: "Use when going through many items systematically without cherry-pi
 - **Один элемент:** одна строка (сделка).
 - **Процедура на сделку:** прочитать все текстовые поля (Примечание 1–5, Звонок, Доведение до второй покупки, Комментарии, комментарии к телефону/почте/имени); склеить в один текст; по полю «Компания» найти в CSV компаний ИНН; распарсить этапы CJM и геп-фразы; записать одну запись в JSONL/CSV.
 - **Батч:** например 500 сделок за запуск; чекпоинт каждые 100.
-- Полный чеклист полей и парсинга для AmoCRM — в задаче клиента (autovin todo) или в скилле-приложении [amocrm-deals-systematic-extraction](.agents/skills/8-amocrm-deals-systematic-extraction/SKILL.md).
+- Полный чеклист полей и парсинга для AmoCRM — в задаче клиента (<client> todo) или в скилле-приложении [amocrm-deals-systematic-extraction](.agents/skills/8-amocrm-deals-systematic-extraction/SKILL.md).
 
 Универсальный скилл задаёт **как** перебирать (по порядку, без пропусков, с чекпоинтами и самопроверкой). Домен-специфичный чеклист задаёт **что** читать и что писать для сделок.
 
@@ -190,7 +190,7 @@ description: "Use when going through many items systematically without cherry-pi
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

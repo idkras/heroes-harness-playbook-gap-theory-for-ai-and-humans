@@ -30,7 +30,7 @@ skills:
 
 Перед любым RCA прочитай:
 1. `.agents/skills/2-rca-incidents/SKILL.md` — полный протокол RCA workspace (precedent scan, existing ticket first, rewrite gate, 5 whys, alt hypotheses, design injection, post-change loop)
-2. `[todo · incidents]/ai.incidents.md` — журнал инцидентов (precedent scan: похожие симптомы, прошлые design injections)
+2. `<internal-folder>/ai.incidents.md` — журнал инцидентов (precedent scan: похожие симптомы, прошлые design injections)
 3. `product-ops/ai-inception-delivery-process-ux-glue-effort-gap-discovery-system.md` §3 — job chain (0-Активирующее знание → 1-Trigger → 2-Setup → 3-Execute → 4-Verify → 5-Integrate → 6-Recover) для gap classification
 4. `AGENTS.md` §0 макрос «ID + человекочитаемое имя» — обязательно для всех таблиц
 5. `AGENTS.md` §Mandatory delivery format п. 9–10 — Hypothesis falsification (delivery self-check) + Owner effort digest

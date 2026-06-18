@@ -95,10 +95,10 @@
 
 | # | Вопрос | Что значит «no» |
 |---|---|---|
-| 1 | Решение работает для всех клиентов из manifest без правки кода компонента, только через `config.json` / `manifest.dataSource`? | hardcoded `if alias == "galaxypets"` или клиент-специфичный файл |
-| 2 | Client identity приходит из `manifest` / `config`, а не из props/state/литералов? | `props.clientName === "galaxypets"` |
-| 3 | Пути к данным разрешаются из `manifest.dataSource`, а не из строковых литералов? | `fetch("/data/galaxypets/funnel.json")` без manifest |
-| 4 | Новый клиент добавляется правкой ТОЛЬКО `manifest.json` + кладкой data-файлов, без новых `.tsx` / без правки registry? | нужно создать `GalaxypetsFunnelSection.tsx` и зарегистрировать |
+| 1 | Решение работает для всех клиентов из manifest без правки кода компонента, только через `config.json` / `manifest.dataSource`? | hardcoded `if alias == "<client>"` или клиент-специфичный файл |
+| 2 | Client identity приходит из `manifest` / `config`, а не из props/state/литералов? | `props.clientName === "<client>"` |
+| 3 | Пути к данным разрешаются из `manifest.dataSource`, а не из строковых литералов? | `fetch("/data/<client>/funnel.json")` без manifest |
+| 4 | Новый клиент добавляется правкой ТОЛЬКО `manifest.json` + кладкой data-файлов, без новых `.tsx` / без правки registry? | нужно создать `<client>FunnelSection.tsx` и зарегистрировать |
 
 Если хоть один = no — **redesign до implementation**. Не писать `Write` пока не получено `yes/yes/yes/yes`.
 

@@ -22,7 +22,7 @@
 |---|---|---|
 | 1 | Доделать v0.1 публичного gap theory репо | author |
 | 2 | Провести 4 advising-сессии с клиентами | advisor |
-| 3 | Написать диагностику для galaxypets management | consultant |
+| 3 | Написать диагностику для <client> management | consultant |
 | 4 | Переписать CITATION.cff и LICENSE для другого репо | author |
 | 5 | Подготовить материалы к workshop в субботу | educator |
 | 6 | Прочитать 2 главы новой книги по change management | learner |
@@ -34,7 +34,7 @@
 |---|---|---|---|
 | 1 | gap theory репо | 70% | README + LICENSE + 3 standards. Skills + agents + templates + examples — пропущены |
 | 2 | 4 advising-сессии | 100% | Все прошли |
-| 3 | galaxypets диагностика | 30% | Прочитал материалы, начал draft, остановился на «нужно ещё data» |
+| 3 | <client> диагностика | 30% | Прочитал материалы, начал draft, остановился на «нужно ещё data» |
 | 4 | CITATION.cff другой репо | 0% | Не открывал |
 | 5 | Workshop materials | 50% | Slide deck готов, упражнения нет |
 | 6 | 2 главы книги | 80% | Прочитал, но не записал takeaways |
@@ -47,14 +47,14 @@
 | JTBD | Что НЕ доделано | Тип gap |
 |---|---|---|
 | 1. gap theory репо | Skills + agents + templates + examples | Execution (знаю как делать, не дошли руки) |
-| 3. galaxypets диагностика | «нужно ещё data» — но это excuse, реально я застрял в формулировке | Knowledge (не уверен какой формат diagnostic дать) |
+| 3. <client> диагностика | «нужно ещё data» — но это excuse, реально я застрял в формулировке | Knowledge (не уверен какой формат diagnostic дать) |
 | 4. CITATION.cff | Не открывал | Execution (микро-задача забыта) |
 | 5. Workshop упражнения | Не сделал | Knowledge (не уверен какой формат упражнений сработает) |
 | 6. Takeaways из книги | Не записал | Feedback (нет ритуала «note after reading») |
 
 **Pattern:**
 - 2 Execution gaps (репо + CITATION) — откладываемые маленькие шаги
-- 2 Knowledge gaps (galaxypets + workshop) — застревание из-за неуверенности в формате
+- 2 Knowledge gaps (<client> + workshop) — застревание из-за неуверенности в формате
 - 1 Feedback gap (book takeaways) — нет ритуала закрытия
 
 ## Шаг 4. Анализ времени по логу
@@ -66,7 +66,7 @@
 | Advising-сессии | 8h | планируемое |
 | Подготовка к сессиям | 6h | планируемое |
 | Telegram / Slack reactive | 9h | reactive |
-| «Подумать о galaxypets» (без действия) | 4h | застревание |
+| «Подумать о <client>» (без действия) | 4h | застревание |
 | «Прочитать что-то про workshop format» (research mode) | 3h | прокрастинация в research mode |
 | Family time | 6h | планируемое |
 | Sleep + meals | 56h | базовое |
@@ -76,7 +76,7 @@
 
 **Surfaces:**
 - 9h reactive Telegram = я сам в нём, не другие меня дёргают
-- 4h «подумать про galaxypets» — это knowledge gap (застрял в формате) маскируется под «think harder»
+- 4h «подумать про <client>» — это knowledge gap (застрял в формате) маскируется под «think harder»
 - 3h «research workshop format» — то же самое
 - На gap theory репо хотел 15h, потратил 5h. Дельта 10h ушла в reactive + research mode
 
@@ -107,7 +107,7 @@
 
 Ожидаемый эффект:
 - gap theory репо доделан (15h есть)
-- galaxypets диагностика — Knowledge gap проходится draft'ом, не «думаньем»
+- <client> диагностика — Knowledge gap проходится draft'ом, не «думаньем»
 - workshop упражнения — black draft в среду, finalize в субботу
 - book takeaways — есть, появляются автоматически
 - CITATION.cff — закрывается в Friday inbox-zero

@@ -1,0 +1,19 @@
+# Detachable-skill manifest — this meta-skill dogfoods its own contract.
+schema_version: 1
+name: 0-detachable-skill-packaging
+detachable: true            # true | partial | false (см. SKILL.md §detachable levels)
+runtime: "python3.11+"
+deps:
+  external: []              # pip packages (stdlib only here)
+  workspace: []             # <internal-component>.* кроме credentials_manager (SSOT, разрешён). <internal-component>/прочее ⇒ detachable=false
+requires_skills: []          # transitive skill deps (e.g. 0-keychain-audit) — partial скилы заполняют
+requires_credentials: []     # Keychain key NAMES скил читает (не values) — partial скилы заполняют
+entrypoints:
+  - path: scripts/skill_packaging_inventory.py
+    kind: cli
+    invoke: "python3 .agents/skills/0-detachable-skill-packaging/scripts/skill_packaging_inventory.py --repo-root . --md report.md"
+tests:
+  path: tests/
+  run: "python3 -m pytest .agents/skills/0-detachable-skill-packaging/tests/ -q"
+fixtures: []
+canonical_source: SKILL.md

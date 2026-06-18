@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "description": "Deterministic no-extra-work scenario budget. Use with a synthetic/replay metrics file that contains these scenario phases.",
+  "required_phases": [
+    "already_in_main",
+    "mergeable_pr",
+    "dirty_under_50"
+  ],
+  "require_complete_run": true,
+  "total": {
+    "min_records": 3,
+    "max_fail_rate": 0,
+    "max_counters": {
+      "extra_actions_count": 0,
+      "missing_actions_count": 0,
+      "worktree_created_count": 0,
+      "auto_stop_commit_count": 0
+    }
+  },
+  "run_total": {
+    "min_records": 1,
+    "max_counters": {
+      "extra_actions_count": 0,
+      "missing_actions_count": 0,
+      "worktree_created_count": 0,
+      "auto_stop_commit_count": 0
+    }
+  },
+  "phases": {
+    "already_in_main": {
+      "min_records": 1,
+      "max_p95_ms": 60000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "extra_actions_count": 0,
+        "missing_actions_count": 0,
+        "worktree_created_count": 0,
+        "merge_attempt_count": 0
+      }
+    },
+    "mergeable_pr": {
+      "min_records": 1,
+      "max_p95_ms": 180000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "worktree_created_count": 0,
+        "extra_actions_count": 0,
+        "missing_actions_count": 0
+      }
+    },
+    "dirty_under_50": {
+      "min_records": 1,
+      "max_p95_ms": 120000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "worktree_created_count": 0,
+        "extra_actions_count": 0,
+        "missing_actions_count": 0
+      }
+    }
+  }
+}

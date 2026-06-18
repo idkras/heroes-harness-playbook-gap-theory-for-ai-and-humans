@@ -15,7 +15,7 @@ description: "Use when building or operating a Telegram agent for champions teac
 
 **Skill Type:** Advising & Change Agent  
 **When to Use:** When designing or running a Telegram bot/agent for champions; when guiding champions through friction analysis; when introducing Gap Theory concepts without lecturing  
-**Based on:** [Champion Playbook Standard 9.0]([standards .md]/6. advising · review · supervising/9.0 champion playbook gap theory agent and change virus standard 15 feb 2026 1200 cet by ai assistant.md), [Gap Theory Standard 1.5](abstract://standard:gap_theory_standard)
+**Based on:** [Champion Playbook Standard 9.0](<standard-ref>), [Gap Theory Standard 1.5](abstract://standard:gap_theory_standard)
 
 ---
 
@@ -224,8 +224,8 @@ Track and suggest measuring:
 
 ## 📚 Related Standards & Skills
 
-- [Champion Playbook Standard 9.0]([standards .md]/6. advising · review · supervising/9.0 champion playbook gap theory agent and change virus standard 15 feb 2026 1200 cet by ai assistant.md)
-- [Gap Theory Standard 1.5]([standards .md]/1. process · goalmap · task · incidents · tickets · qa/1.5 gap theory standard 26 august 2025 2325 CET by ilya krasinsky.md)
+- [Champion Playbook Standard 9.0](<standard-ref>)
+- [Gap Theory Standard 1.5](<standard-ref>)
 - `protocol-challenge` — falsify conclusions
 - `standards-create-update-review` — create/update standards
 
@@ -260,7 +260,7 @@ Track and suggest measuring:
 | {UTC date} | {skill_name} | {owner prompt ≤240} | {steering: yes/no} | {target artifact} | {reasoning bullets} | {blocking_instruction} |
 ```
 
-3. **При задачах > 3 ходов** — сохранить лог в `[todo · incidents]/reasoning-logs/`.
+3. **При задачах > 3 ходов** — сохранить лог в `<internal-folder>/reasoning-logs/`.
 
 Hard fail: без reasoning log скилл считается неисполненным. См. протокол **agent-reasoning-log** в `AGENTS.md` (список навыков).
 

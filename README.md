@@ -11,7 +11,7 @@
 
 ## TL;DR — что внутри
 
-Это публичный экспорт каноничной части **Gap Theory** — методологии, которую я применял с 2024-2026 года в advising-проектах с командами marketing analytics platforms (galaxypets, autovin, fashionhub, sleepwell, designcraft, fitcrew, bigfin), а также в собственной команде Praxis/Pulse.ai.
+Это публичный экспорт каноничной части **Gap Theory** — методологии, которую я применял с 2024-2026 года в advising-проектах с командами marketing analytics platforms (<client>, <client>, <client>, <client>, designcraft, fitcrew, bigfin), а также в собственной команде Praxis/<internal-component>.
 
 Репозиторий даёт **9 стандартов**, **19 скилов**, **10 субагентов**, **5 примеров диагностики** и **playbook AI-management** — всё, чтобы внешняя команда или AI-агент могли:
 
@@ -28,7 +28,7 @@
 
 | Роль | JTBD | Что брать первым |
 |---|---|---|
-| **Founder / CEO** | Диагностировать команду и процессы по переписке/действиям | `examples/01-diagnose-founder-from-correspondence.md`, `playbook/01-ai-management-galaxypets-style.md` |
+| **Founder / CEO** | Диагностировать команду и процессы по переписке/действиям | `examples/01-diagnose-founder-from-correspondence.md`, `playbook/01-ai-management-<client>-style.md` |
 | **Product Manager** | Найти где продукт теряет пользователей и как это починить системно | `standards/01-gap-theory.md`, `examples/04-diagnose-product-from-user-actions.md` |
 | **Sales lead / РОП** | Разобрать звонки команды по картам разрыва, поставить выводы | `examples/03-diagnose-sales-team-from-calls.md`, `agents/process-correspondence-investigator.md` |
 | **AI engineer / agent builder** | Сделать чтобы агент сам фальсифицировал свои гипотезы и не врал | `skills/01-hypothesis-gap-falsification.md`, `agents/hypothesis-designer.md`, `playbook/03-orchestrator-with-qa-gate.md` |
@@ -117,7 +117,7 @@
 │   └── (16 файлов, по одному на скилл)
 │
 ├── playbook/                          ← практические сборки
-│   ├── 01-ai-management-galaxypets-style.md
+│   ├── 01-ai-management-<client>-style.md
 │   ├── 02-recommended-tickets-and-skills.md
 │   └── 03-orchestrator-with-qa-design-gate.md
 │

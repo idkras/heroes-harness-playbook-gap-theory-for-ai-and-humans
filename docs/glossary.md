@@ -128,15 +128,15 @@ Reactance / Endowment / Distance / Uncertainty / Corroborating evidence / Educat
 
 | Placeholder | Subject area |
 |---|---|
-| galaxypets | game-marketplace для виртуальных питомцев |
-| autovin | B2B-маркетплейс автозапчастей |
-| fashionhub | premium fashion ecommerce |
-| sleepwell | sleep-tech retail (matrasses, sleep products) |
+| <client> | game-marketplace для виртуальных питомцев |
+| <client> | B2B-маркетплейс автозапчастей |
+| <client> | premium fashion ecommerce |
+| <client> | sleep-tech retail (matrasses, sleep products) |
 | designcraft | design platform |
 | fitcrew | fitness apps marketplace |
 | bigfin | financial broker (retail investments) |
 | tempest | B2B equipment supplier |
-| pulse.ai | marketing analytics platform |
+| <internal-component> | marketing analytics platform |
 | praxis platform | AI methodology platform / internal codebase |
 | luminary | small/medium business advising context |
 

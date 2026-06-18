@@ -1,0 +1,263 @@
+# Root structure manifest — SSOT для чистоты корня workspace
+# RCA 2026-06-02 (owner /goal): корень содержал 167 top-level записей, много «левых»
+# (docs-bloat, stray *.todo.md, stray *.py, output-мусор, 42GB client bronze).
+# Ни один существующий guardian не определял КАНОН корня. Этот манифест — единственный
+# источник истины: что разрешено в top-level и куда роутить всё остальное.
+#
+# Универсальность: правила pattern-based, без hardcode конкретного клиента/проекта.
+# Новый клиент/проект НЕ требует правки этого файла — попадает под routing-правила.
+#
+# Потребители: scripts/root_structure_router.py (классификатор + apply),
+#              .agents/skills/0-root-structure-guardian/SKILL.md (gate),
+#              .claude/hooks/root_new_entry_gate.py (PreToolUse Write block).
+version: 2
+
+# Многие записи корня — намеренные symlink'и (skills→~/.codex/skills,
+# storytelling→../heroes-rickai-storytelling, .codex-memory~origin_main→.agents/memory,
+# .rick-form-build & .rickai-ui-kit→<internal-folder>/rickai-ui-kit, <internal-folder>→../appcraft).
+# allow_symlinks=true → router помечает symlink как allowed (после junk/owner_decision).
+allow_symlinks: true
+
+# Bracketed-папки `[name]` — каноническая конвенция knowledge/client content-папок
+# (<internal-folder>, [<client>] flow.<client>, <internal-folder> google drive, <internal-folder> и т.п.).
+# Любая dir, имя которой матчит один из этих glob, = allowed by pattern
+# (НО explicit owner_decision/junk имеют приоритет — см. порядок classify).
+allowed_dir_patterns:
+  - "[*]"
+
+# ─────────────────────────────────────────────────────────────────────────
+# 1. ALLOWED — канонические записи top-level (точные имена). Всё остальное = stray.
+# ─────────────────────────────────────────────────────────────────────────
+allowed_dirs:
+  # --- AI-agent инфраструктура (SSOT + symlink-зеркала) ---
+  - .agents          # canonical skills/agents/memory SSOT
+  - .claude          # Claude Code config + hooks + worktrees
+  - .codex           # Codex config (symlink-зеркало)
+  - .codex-memory    # backward-compat symlink → .agents/memory
+  - .cursor          # Cursor rules
+  - .beads           # bd issue tracker (canonical state)
+  - .reasoning-log   # reasoning log spans
+  - .hypothesis      # hypothesis test cache
+  - .agent           # legacy agent dir (backward-compat)
+  # --- git / CI ---
+  - .git
+  - .githooks
+  - .github
+  # --- editor / runtime (gitignored) ---
+  - .vscode
+  - .venv
+  - .pytest_cache
+  - node_modules
+  - <internal-component>.egg-info
+  # --- код проекта ---
+  - <internal-component>        # MCP-серверы, workflows, shared
+  - heroes_harness         # harness
+  - product-ops            # scenarios / skills / pattern-base
+  - scripts                # workspace-level скрипты
+  - tests                  # workspace-level тесты
+  - tooling                # tooling
+  - config                 # конфиги (этот манифест здесь)
+  - self-hosted            # self-hosted deploy
+  - rick-ai-<internal-component> # <teammate>-led Rick.ai <internal-component> submodule (<internal-host>/rick-ai-<internal-component>); moved nested→root 2026-06-11 bead pr-rick-a7n3
+  - exports                # output layer (gitignored) — НЕ junk: легитимный data-exports target
+  - docs                   # governance/onboarding whitelist (Document Creation Guard) — routing target
+  # --- канонические content-папки (bracketed = knowledge/client SSOT) ---
+  - "<internal-folder>"
+  - "<internal-folder>"
+  - "<internal-folder>"
+  - "<internal-folder>"
+  - "<internal-folder>"
+  - "[workshops]"
+  - "[n8n] workflows"
+  - "<internal-folder>"
+  # --- large-data sync (gitignored, см. §4) ---
+  - syncthing
+
+allowed_files:
+  # --- agent protocol (корень обязателен) ---
+  - AGENTS.md
+  - CLAUDE.md           # symlink → AGENTS.md
+  - CODEX.md            # symlink → AGENTS.md
+  - README.md
+  - WORKSPACE_MAP.md
+  - changelog.md
+  - todo.md             # canonical root reflection layer (AGENTS.md §Beads-first)
+  # --- build / deps ---
+  - Makefile
+  - pyproject.toml
+  - requirements.txt
+  - requirements_duckdb_gsheets.txt
+  - package.json
+  - package-lock.json
+  - uv.lock
+  - lefthook.yml
+  - mise.toml
+  - mypy.ini
+  - pyrightconfig.json
+  - submodules-and-projects-registry.yaml
+  - skills-lock.json
+  - harness-workflow.yaml          # Standard 0.3 process-view (8 стадий) — graphify dep-graph source
+  - harness-distribution.yaml      # Standard 0.4 distribution SSOT (editions × matrix)
+
+# Точные dotfile-имена допустимы в корне (конфиги инструментов)
+allowed_dotfiles:
+  - .cursorignore
+  - .editorconfig
+  - .env
+  - .env.example
+  - .gitattributes
+  - .gitignore
+  - .gitmessage.txt
+  - .gitmodules
+  - .mcp.json
+  - .python-version
+  - .replit
+  - .tool-versions
+  - .coverage
+  - .DS_Store          # junk, но gitignored — router пометит junk, не stray
+
+# ─────────────────────────────────────────────────────────────────────────
+# 2. ROUTING — куда переносить stray-записи (первое совпадение выигрывает).
+#    scope: root-only — правило применяется только к записям в top-level корня.
+# ─────────────────────────────────────────────────────────────────────────
+routing:
+  - id: todo-files
+    match: "*.todo.md"
+    target: "<internal-folder>/"
+    reason: "project/task todo принадлежат <internal-folder>/ (reflection layer) или папке проекта"
+    git_mv: true
+
+  - id: stray-py-scripts
+    match: "*.py"
+    target: "scripts/"
+    reason: "workspace-level скрипты живут в scripts/, не в корне"
+    git_mv: true
+    exclude: ["setup.py", "conftest.py"]
+
+  - id: stray-ps1-scripts
+    match: "*.ps1"
+    target: "scripts/"
+    reason: "PowerShell-скрипты живут в scripts/, не в корне (test-linear-key.ps1)"
+    git_mv: true
+
+  - id: <client>
+    # одиночные analysis/governance .md в корне → docs/ (whitelist) ИЛИ <internal-folder>/
+    match_any: ["CRYPTIC_CODES_INVENTORY.md", "VALIDATION-AI-LAYER.md", "clean-debt.md",
+                "architecture-decisions.md", "ai-promts.md", "promts.md"]
+    target: "docs/"
+    reason: "governance/analysis docs → docs/ (whitelist по Document Creation Guard)"
+    git_mv: true
+
+  - id: <client>
+    # клиентские отчёты по имени клиента/проекту → папка клиента
+    match_any: ["monitor-report-avtoall-*.md", "wiserapp_*.md", "wiserapp_*.json",
+                "telegram_chat_reconciliation.md", "beads-hub-graph-*.md"]
+    target: "NEEDS_OWNER_DECISION"
+    reason: "клиентский/проектный артефакт — точный target зависит от клиента, нужен owner pick"
+
+  - id: data-exports
+    match_any: ["*.xlsx", "ghost_posts.json", "wiserapp_analysis.json", "*-network.txt",
+                "installed_packages.txt", "release_02_status.txt"]
+    target: "exports/"
+    reason: "data exports → exports/ (gitignored output layer, allowed_dir; НЕ junk)"
+    git_mv: false
+
+# ─────────────────────────────────────────────────────────────────────────
+# 3. JUNK — мусор, в trash (или gitignore), НЕ переносить в репо
+# ─────────────────────────────────────────────────────────────────────────
+junk_patterns:
+  - "*.log"
+  - "*.png"               # graph screenshots в корне = output
+  - "*.session"           # секрет-сессии (уже gitignored)
+  - "beads_prototype*.jsonl"
+  - "console-*.log"
+  - ".DS_Store"
+  - ".tmp_*"
+  - "temp_*.py"
+  - "*.bak"
+
+# Точные имена junk-файлов в корне (0-byte / stray accidental files).
+# Обрабатываются ТОЛЬКО когда запись = файл и НЕ symlink
+# (чтобы не задеть реальную dir `index` где-то ещё или symlink).
+# `index` (4.9MB stray, настоящий git index живёт в .git/),
+# `lead`/`transaction` (0-byte случайные stray-файлы).
+junk_files:
+  - index
+  - index.lock
+  - lead
+  - transaction
+
+# ВАЖНО (RCA 2026-06-05): junk_dirs — ТОЛЬКО для заведомо untracked runtime-папок.
+# git-tracked записи router НЕ авто-trash (guard `_git_tracked` в apply_moves V_JUNK):
+# output/ (1165 tracked файлов), results/, intake/, test_data/ оказались committed-
+# контентом → перенесены в owner_decision_dirs (owner решает git rm или keep), НЕ junk.
+junk_dirs:
+  - output_screenshot
+  - screenshots
+  - logs
+  - tmp
+  - heroes-google-drive-exchange   # local-only handoff staging
+  - telegram_exported_channels     # 2.9G runtime export
+  - fonts           # if not referenced; else allowed
+
+# ─────────────────────────────────────────────────────────────────────────
+# 4. LARGE DATA → gitignore_in_place (RCA 2026-06-02; design-review F3+F10)
+#    Крупные client <layer>/<layer>/<layer>/quarantine НЕ коммитятся в git
+#    (GitHub лимит 100MB/файл, раздутие репо).
+#
+#    ПОЧЕМУ НЕ move_then_symlink (CATEGORICAL no-go, design-review F3/F10):
+#    стратегия «mv data → syncthing/; ln -s back» кладёт symlink В GIT. При clone
+#    репозитория на машине БЕЗ Syncthing (Cursor Cloud / CI / новый teammate)
+#    symlink резолвится в несуществующий syncthing/<path> → broken symlink →
+#    MCP-читатели (data_manager, parquet readers) падают с FileNotFoundError.
+#    Symlink-in-git делает данные недостижимыми везде, кроме Syncthing-нод.
+#
+#    КОРРЕКТНАЯ стратегия — gitignore_in_place:
+#    данные ОСТАЮТСЯ на своём реальном месте (<internal-folder>/clients/.../bronze),
+#    добавляются в .gitignore (НЕ в git), Syncthing синкает РЕАЛЬНЫЙ путь
+#    (не symlink). НЕТ symlink в git вообще. Clone без Syncthing → данных просто
+#    нет локально (как любой gitignored artefact), но НЕТ broken symlink и НЕТ
+#    FileNotFoundError на резолве пути — код видит отсутствие файла честно.
+#
+#    Router scan_large_data репортит кандидатов > threshold + предлагает
+#    .gitignore-паттерны. apply для large_data = ТОЛЬКО печать предлагаемых
+#    .gitignore строк (НЕ move, НЕ symlink). Реальную запись в .gitignore
+#    делает owner после ревью предложенных строк.
+# ─────────────────────────────────────────────────────────────────────────
+large_data:
+  threshold_mb: 100
+  scan_globs:
+    - "<internal-folder>/clients/all-clients/*/bronze"
+    - "<internal-folder>/clients/all-clients/*/*/bronze"
+    - "<internal-folder>/clients/all-clients/*/projects/*/bronze"
+    - "<internal-folder>/clients/all-clients/*/projects/*/silver"
+    - "<internal-folder>/clients/all-clients/*/projects/*/gold"
+    - "<internal-folder>/clients/all-clients/*/projects/*/_quarantine*"
+  strategy: "gitignore_in_place"        # данные на месте, gitignore, Syncthing на реальный путь
+  gitignore_pattern_target: ".gitignore" # куда owner добавит предложенные строки
+
+# ─────────────────────────────────────────────────────────────────────────
+# 5. NEEDS_OWNER_DECISION — записи, требующие решения владельца (не авто-роутить)
+#    Router выводит их отдельной секцией с рекомендацией.
+# ─────────────────────────────────────────────────────────────────────────
+owner_decision_dirs:
+  # ВАЖНО (F8/L2 cross-check): НИ ОДИН target из routing[] не должен указывать
+  # на dir, перечисленный здесь ИЛИ в junk_dirs. <client> → docs/, data-exports → exports/ —
+  # docs и exports вынесены в allowed_dirs (легитимные output/whitelist слои), НЕ в owner_decision.
+  # Router assert'ит этот инвариант в load_manifest (raise на нарушении).
+  - projects             # lowercase, дубль <internal-folder>/ — merge или удалить?
+  - marketing            # дубль <internal-folder> marketing/?
+  - todo                 # дубль <internal-folder>/?
+  - tools                # дубль tooling/?
+  - getting-started
+  - heroes-management
+  - heroes-google-drive
+  - heroes-sales-marketing-course
+  - rickai-design
+  - cost-allocation-detachable-pack
+  - .justislav
+  - ".Alina Krym"
+  - changes.d           # fragment workflow (rolled back 2026-05-11) — должно быть удалено
+  - workshops           # lowercase дубль [workshops]/ — merge или удалить?
+  - "<internal-folder> rick.ai · advising clients legacy"  # legacy bracketed — owner pick (НЕ авто-bless by bracket pattern)
+  - "[ik] буфер обмена"                            # bracketed clipboard buffer — owner decision

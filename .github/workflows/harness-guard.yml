@@ -1,0 +1,26 @@
+name: harness-guard
+
+# Самопроверка harness-template на каждый push/PR (stdlib-only, без зависимостей):
+#   1. checksum — полнота+целостность (missing/changed/uncontrolled → FAIL)
+#   2. bootstrap — self-activation отрабатывает standalone (chmod/пути/verify) → FAIL
+# leak-guard/sanitize/тесты с денлистами — owner-side, в публичный template НЕ едут.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: checksum — полнота + целостность сборки
+        run: python3 scripts/harness_template_checksum.py --root . --verify
+      - name: bootstrap self-activation (standalone, strict)
+        run: python3 scripts/harness_bootstrap.py --root . --check --strict

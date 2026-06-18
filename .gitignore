@@ -33,3 +33,8 @@ build/
 *.epub
 _site/
 public/
+
+# Harness self-activation — local-only
+.canonical-src
+.claude/.state/
+.claude/settings.local.json

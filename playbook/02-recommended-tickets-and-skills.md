@@ -83,7 +83,7 @@
 ### T8: AI-management роли в команде (3-6 месяцев)
 
 **JTBD:** делегировать routinely-tasks AI-агентам как junior consultants.
-**Method:** [`playbook/01-ai-management-galaxypets-style.md`](01-ai-management-galaxypets-style.md). Старт с 1 роли (digest / coordinator), расширение до 4-6 ролей.
+**Method:** [`playbook/01-ai-management-<client>-style.md`](01-ai-management-<client>-style.md). Старт с 1 роли (digest / coordinator), расширение до 4-6 ролей.
 **Output:** AI-роли с JTBD + tool list + falsification + reporting cadence.
 **Outcome:** ~16 часов / неделя освобождённого времени owner.
 
@@ -148,5 +148,5 @@ Skills 11-18 — для зрелых команд использующих AI-ma
 ## Связанные
 
 - [`README.md`](../README.md)
-- [`playbook/01-ai-management-galaxypets-style.md`](01-ai-management-galaxypets-style.md)
+- [`playbook/01-ai-management-<client>-style.md`](01-ai-management-<client>-style.md)
 - [`playbook/03-orchestrator-with-qa-design-gate.md`](03-orchestrator-with-qa-design-gate.md)

@@ -4,7 +4,7 @@
 
 ## Контекст
 
-**Кто:** sleepwell — sleep-tech retail, B2C, средний чек $500.
+**Кто:** <client> — sleep-tech retail, B2C, средний чек $500.
 **Команда продаж:** 8 sellers, head of sales, head of customer success.
 **Запрос:** «Конверсия от первого звонка к покупке упала с 18% до 11% за 3 месяца. Почему?»
 

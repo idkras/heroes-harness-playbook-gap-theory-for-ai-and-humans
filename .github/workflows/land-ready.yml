@@ -1,0 +1,67 @@
+name: Land ready PRs
+
+# RCA 2026-06-07 (pr-rick-gbpg): cross-CLI merge-gate. The PRIMARY, strongest
+# layer of the auto-merge sweep — server-side, scheduled, CANNOT be
+# `git push --no-verify`-bypassed (unlike lefthook), runs even when no one is
+# pushing (overnight idle), works for branches pushed from ANY runtime
+# (Codex / Claude / manual / teammate machine without lefthook). The lefthook
+# pre-push + Claude SessionStart sweeps are opportunistic fast-paths; this
+# scheduled Action is the guaranteed catch-up.
+#
+# Security (Stage-6 security-reviewer): runs with the ephemeral, repo-scoped
+# GITHUB_TOKEN (not the owner's full-scope PAT), and the script enforces the
+# author allowlist (repo owner) + same-repo (no fork) + mergeable + CLEAN.
+#
+# Out of scope (honest residual, Stage-6 inception-reviewer gap#2): a session
+# that never runs `git push` (push-less Codex) leaves work local-only — the
+# merge-gate cannot see it. Covered only once the branch is pushed (any runtime).
+#
+# Org-migration note: AUTO_MERGE_AUTHOR_ALLOWLIST = github.repository_owner
+# resolves to the OWNER LOGIN for a personal repo. If this repo moves to an org,
+# repository_owner becomes the ORG name (not a user login) → every PR is skipped
+# as "author not in allowlist". Then set AUTO_MERGE_AUTHOR_ALLOWLIST to an
+# explicit comma-list of human logins (or a repo variable).
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 min
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: "merge (true) or dry-run (false)"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: land-ready
+  cancel-in-progress: false   # never interrupt an in-flight merge
+
+jobs:
+  land-ready:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (script only)
+        # Pinned to v4.2.2 commit SHA (supply-chain hygiene, Stage-6 design N3).
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout: |
+            scripts/auto_merge_ready_prs.py
+          sparse-checkout-cone-mode: false
+
+      - name: Sweep & merge ready PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # author allowlist = repo owner (resolves to idkras for this repo);
+          # the bot's own gh login on the runner would NOT match, so we must
+          # pass it explicitly.
+          AUTO_MERGE_AUTHOR_ALLOWLIST: ${{ github.repository_owner }}
+        run: |
+          MODE="--execute"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.execute }}" != "true" ]; then
+            MODE=""
+          fi
+          python3 scripts/auto_merge_ready_prs.py --scope all-own $MODE --json

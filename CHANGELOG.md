@@ -12,14 +12,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - 10 templates: 5W+H, RCA effort scale 0-100, hypothesis card, expected output table, gap table, owner effort digest, quick ticket card, JTBD scenarium tree, critical chain card, so-what ladder.
 - 5 worked diagnosis examples: founder from correspondence, company from team chat, sales team from calls, product from user actions, self from own week log.
 - Worked examples per skill (one per main skill).
-- 3 playbooks: AI management galaxypets-style, recommended tickets and skills, orchestrator with QA + design gate.
+- 3 playbooks: AI management <client>-style, recommended tickets and skills, orchestrator with QA + design gate.
 - Glossary in `docs/glossary.md`.
 - Dual licensing: Apache 2.0 for code, CC BY 4.0 for documentation.
 - CITATION.cff for academic attribution.
 - CONTRIBUTING.md with PR/Issue guidelines.
 
 ### Anonymization
-- Real client names and domains anonymized to similar-domain placeholder names (galaxypets, autovin, fashionhub, sleepwell, designcraft, fitcrew, bigfin, tempest, pulse.ai, praxis platform). Subject area preserved so readers can map to their own context.
+- Real client names and domains anonymized to similar-domain placeholder names (<client>, <client>, <client>, <client>, designcraft, fitcrew, bigfin, tempest, <internal-component>, praxis platform). Subject area preserved so readers can map to their own context.
 
 ### Known limitations of v0.1.0
 - Worked examples cover ecommerce / analytics / B2B SaaS contexts; broader industry coverage planned for v0.2.

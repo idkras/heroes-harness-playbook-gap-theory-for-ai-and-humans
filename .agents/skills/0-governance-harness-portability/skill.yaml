@@ -1,0 +1,20 @@
+# Detachable-skill manifest — dogfoods Pillar C of Standard 0.3.
+schema_version: 1
+name: 0-governance-harness-portability
+kind: code                  # code | knowledge (knowledge = SKILL.md only, no scripts/)
+detachable: true            # true | partial | false (см. 0-detachable-skill-packaging §detachable levels)
+runtime: "python3.9+"
+deps:
+  external: []              # stdlib only (json/argparse/pathlib/subprocess/re)
+  workspace: []
+requires_skills: []
+requires_credentials: []
+entrypoints:
+  - path: scripts/verify_harness_wiring.py
+    kind: cli
+    invoke: "python3 .agents/skills/0-governance-harness-portability/scripts/verify_harness_wiring.py --repo-root . --smoke"
+tests:
+  path: tests/
+  run: "python3 -m pytest .agents/skills/0-governance-harness-portability/tests/ -q"
+fixtures: []
+canonical_source: SKILL.md

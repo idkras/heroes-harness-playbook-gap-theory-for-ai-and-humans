@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "description": "Deterministic eval budget for the real measured GitHub sync route. Timing limits are intentionally loose until the first 10 real runs establish a baseline; zero-loss and no-extra-work counters are strict.",
+  "required_phases": [
+    "git_fetch",
+    "checkout_main",
+    "pull_rebase_main",
+    "team_activate",
+    "team_sync_guard"
+  ],
+  "require_complete_run": true,
+  "total": {
+    "min_records": 5,
+    "max_p95_ms": 900000,
+    "max_fail_rate": 0,
+    "max_counters": {
+      "extra_actions_count": 0,
+      "missing_actions_count": 0,
+      "worktree_created_count": 0,
+      "auto_stop_commit_count": 0
+    }
+  },
+  "run_total": {
+    "min_records": 1,
+    "max_p95_ms": 900000,
+    "max_counters": {
+      "extra_actions_count": 0,
+      "missing_actions_count": 0,
+      "worktree_created_count": 0,
+      "auto_stop_commit_count": 0
+    }
+  },
+  "phases": {
+    "git_fetch": {
+      "min_records": 1,
+      "max_p95_ms": 120000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "fetch_count": 1,
+        "worktree_created_count": 0
+      }
+    },
+    "checkout_main": {
+      "min_records": 1,
+      "max_p95_ms": 30000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "worktree_created_count": 0,
+        "rebase_attempt_count": 0
+      }
+    },
+    "pull_rebase_main": {
+      "min_records": 1,
+      "max_p95_ms": 180000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "rebase_attempt_count": 1,
+        "worktree_created_count": 0
+      }
+    },
+    "team_activate": {
+      "min_records": 1,
+      "max_p95_ms": 300000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "worktree_created_count": 0
+      }
+    },
+    "team_sync_guard": {
+      "min_records": 1,
+      "max_p95_ms": 360000,
+      "max_fail_rate": 0,
+      "max_counters": {
+        "worktree_created_count": 0
+      }
+    }
+  }
+}
