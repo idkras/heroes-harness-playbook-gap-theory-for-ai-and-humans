@@ -33,9 +33,9 @@ DEFAULT_ROOTS = [
     ".claude/settings.json",
     ".agents/skills",
     ".agents/agents",
+    "config",                      # root-structure-manifest.yaml и пр. harness-конфиг
+    "scripts",                     # все harness-скрипты (bootstrap/checksum/router/...)
     "harness-workflow.yaml",
-    "scripts/harness_bootstrap.py",
-    "scripts/harness_template_checksum.py",
 ]
 
 EXCLUDE_PARTS = {"__pycache__", ".pytest_cache", "node_modules", ".git", ".beads"}
