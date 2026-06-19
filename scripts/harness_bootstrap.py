@@ -149,6 +149,57 @@ def run_verifier(root: Path, script_rel: str, args: list[str], timeout: int = 90
     return ("PASS" if r.returncode == 0 else "FAIL"), last[:200]
 
 
+def ensure_toolchain(root: Path, write: bool) -> tuple[str, str]:
+    """Toolchain (bd/Dolt/python-deps) self-install. Идемпотентно, marker-guarded.
+
+    На SessionStart: если чего-то не хватает И это первый прогон после клона
+    (нет marker) — ОДИН раз зовём scripts/setup/install_all.sh. Дальше — мгновенный
+    --check. Тяжёлые сетевые установки (brew/curl/pip) живут в shell-инсталляторе
+    (bootstrap — stdlib-only); bootstrap лишь дирижирует и отчитывается.
+
+    Возвращает WARN (не FAIL) при неполноте — чтобы оффлайн-CI и отсутствие сети
+    не красили весь harness в 🔴; bd/Dolt доустанавливаются по подсказке в detail."""
+    installer = root / "scripts" / "setup" / "install_all.sh"
+    if not installer.exists():
+        return "SKIP", "scripts/setup/install_all.sh отсутствует"
+
+    def _complete() -> bool:
+        try:
+            r = subprocess.run(
+                ["bash", str(installer), "--check"],
+                cwd=root, capture_output=True, text=True, timeout=60,
+            )
+            return r.returncode == 0
+        except Exception:  # noqa: BLE001
+            return False
+
+    if _complete():
+        return "PASS", "bd/Dolt/python-deps на месте"
+    if not write:
+        return "WARN", "toolchain неполон (bash scripts/setup/install_all.sh)"
+
+    marker = root / ".claude" / ".state" / ".toolchain-bootstrap-done"
+    if marker.exists():
+        return "WARN", "неполон после авто-установки — запусти scripts/setup/install_all.sh"
+
+    # первый прогон после клона — ставим один раз (до 10 мин на brew/pip)
+    try:
+        subprocess.run(
+            ["bash", str(installer)],
+            cwd=root, capture_output=True, text=True, timeout=600,
+        )
+    except subprocess.TimeoutExpired:
+        return "WARN", "установка >600s — доустанови: scripts/setup/install_all.sh"
+    except Exception as e:  # noqa: BLE001
+        return "WARN", f"installer error: {e}"
+    finally:
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text("done\n", encoding="utf-8")
+
+    return ("PASS", "toolchain доустановлен на этом SessionStart") if _complete() else (
+        "WARN", "часть toolchain не встала — см. scripts/setup/install_all.sh")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true", help="read-only, ничего не пишет")
@@ -186,6 +237,9 @@ def main() -> int:
 
     mode, mode_note = detect_mode(root, write)
     steps.append({"step": f"mode: {mode}", "status": "PASS", "detail": mode_note})
+
+    tc_status, tc_detail = ensure_toolchain(root, write)
+    steps.append({"step": "toolchain (bd/Dolt/deps)", "status": tc_status, "detail": tc_detail})
 
     chk_status, chk_detail = run_verifier(
         root,

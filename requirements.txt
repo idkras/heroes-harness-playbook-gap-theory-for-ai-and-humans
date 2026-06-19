@@ -1,7 +1,17 @@
+# Heroes Harness — python зависимости.
+# Ставятся в .venv установщиком scripts/setup/install_all.sh (idempotent).
+#
+# Ядро хуков/скриптов — stdlib-only и работает БЕЗ этих пакетов.
+# Эти пакеты нужны для: тестов скилов (pytest), парсинга манифестов (PyYAML),
+# графа зависимостей задач (networkx — слой под 'bd graph' / canonical graphify).
+
+pytest==8.4.2
+PyYAML==6.0.3
+networkx==3.2.1
+
+# транзитивные пины (воспроизводимость на python 3.9+)
 exceptiongroup==1.3.1
 iniconfig==2.1.0
 packaging==26.2
 pluggy==1.6.0
-pytest==8.4.2
-PyYAML==6.0.3
 tomli==2.4.1

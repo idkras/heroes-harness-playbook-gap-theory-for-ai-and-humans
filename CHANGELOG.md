@@ -3,6 +3,23 @@
 All notable changes to **Heroes Gap Theory for AI and Humans** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+- `scripts/setup/install_all.sh` — публичный idempotent-установщик всего toolchain
+  (python `.venv` + deps, `bd`/beads, Dolt, `bd init`). graphify помечен
+  optional/canonical-only. Закрывает разрыв «обвязка ставилась, инструменты — нет».
+- `docs/GETTING_STARTED.md` — онбординг для новых участников: структура, скилы,
+  агенты, как вести задачи через beads, бизнес-процесс/жизненный цикл изменения.
+- `docs/why-harness-not-installed-5-whys.md` — RCA (5 Whys) почему toolchain не
+  ставился по умолчанию + что починено.
+- `requirements.txt` — закреплён в git (раньше был untracked); добавлен `networkx`.
+
+### Changed
+- `scripts/harness_bootstrap.py` — новый шаг `toolchain`: на первом SessionStart
+  один раз (marker-guarded) запускает `install_all.sh` и отчитывается PASS/WARN
+  в getting-started чеклисте. Тяжёлые сетевые установки — вне stdlib-only bootstrap.
+
 ## [0.1.0] — 2026-04-26 — Initial public release
 
 ### Added
