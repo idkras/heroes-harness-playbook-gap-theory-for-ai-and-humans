@@ -9,6 +9,22 @@
 
 ---
 
+## Установка (после `git clone`)
+
+Ничего настраивать руками не нужно — SessionStart-хук сам активирует обвязку и
+ставит toolchain (`bd`, Dolt, python-deps). Если открываешь не в Claude Code/Codex
+или хочешь поставить вручную:
+
+```bash
+bash scripts/setup/install_all.sh        # idempotent: venv+deps, beads(bd), Dolt
+python3 scripts/harness_bootstrap.py     # активировать обвязку + getting-started чеклист
+```
+
+📘 **Новому участнику начинать здесь → [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md)**
+(структура, скилы, агенты, как вести задачи через beads, бизнес-процесс).
+
+---
+
 ## TL;DR — что внутри
 
 Это публичный экспорт каноничной части **Gap Theory** — методологии, которую я применял с 2024-2026 года в advising-проектах с командами marketing analytics platforms (<client>, <client>, <client>, <client>, designcraft, fitcrew, bigfin), а также в собственной команде Praxis/<internal-component>.

@@ -61,14 +61,15 @@
     "config/root-structure-manifest.yaml": "8abd3bc9247a02fd3e80f8a50ff61d0f38ca80872fb112d30ad3face2527c11e",
     "scripts/auto_merge_ready_prs.py": "37c21d9344d83175cf48eea583cca6487887a509637fe505c29a7bc32e89a427",
     "scripts/bd_anti_legend.py": "81861199bb45ac3df1f3fbdf1ed0d5659bd1b754e253dadcce7e84b0f226ee8e",
-    "scripts/harness_bootstrap.py": "56f2b28668767748cfa2bbe8f896bcff38d7e970a7567b91ce752ea751074dc9",
+    "scripts/harness_bootstrap.py": "b8ee7c26ee3f92bbec1ce6afddc5cd23cdfab71c0e786020f2bfcc4f476c154b",
     "scripts/harness_template_checksum.py": "703763bfa3d4529978082c05b6fdfc285819f965480f2cb87333d5a98d1879ec",
     "scripts/make_worktree.py": "a39224732cba243b781e250e79c13940ed967c63d43c392b59bce24b6f7c4513",
     "scripts/root_structure_router.py": "42b353acd18b50133fee88c4a6333e3e1873ce1ee3ec0275f46785ed51fdf301",
+    "scripts/setup/install_all.sh": "276c853ce1df1b8453a1e24270e4aa5dca809eacd2ed7932e0c9e00011e6fc35",
     "scripts/validate_skill_contract.py": "aa5281e78068074adaa6044375487a5d470ba1532a4f959713ba3b950a34ada4"
   },
-  "generated_for": "heroes-playbook-gap-theory-for-ai-and-humans",
-  "n_files": 66,
+  "generated_for": "pr-rick-jtbd-uchastnik-kloniruet-harness-git-mike-harness-template-uy8",
+  "n_files": 67,
   "roots": [
     ".claude/hooks",
     ".claude/settings.json",
