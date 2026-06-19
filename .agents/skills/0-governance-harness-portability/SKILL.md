@@ -21,6 +21,22 @@ description: "Use AFTER copying the Standard 0.3 governance harness into any cli
 
 Каждый прогон verifier'а на новом репозитории клиента/партнёра превращает «надеюсь, обвязка подключена» в «доказано: N PASS / 0 GAP ИЛИ вот точные дыры». Метрика — `gaps == 0` в CI клиента после adopt. Один источник истины (`harness-manifest.json`) → нет дрейфа между документом и реальностью.
 
+## Toolchain bootstrap & graceful degradation (после клона)
+
+Wiring — это полдела: обвязка может быть подключена, а инструментов (`bd`/Dolt/
+deps) ещё нет. SSOT этого слоя — [`harness-workflow.yaml`](../../../harness-workflow.yaml) §getting_started.
+
+- **Авто-установка:** `scripts/harness_bootstrap.py` на первом SessionStart
+  (marker-guarded) зовёт `scripts/setup/install_all.sh` — ставит `.venv`+deps,
+  `bd`, Dolt, `bd init`. Idempotent; вручную `bash scripts/setup/install_all.sh`.
+- **Инвариант «работает до установки» (graceful degradation):** после синка и ДО
+  полной установки харнесс остаётся рабочим. Core — stdlib-only; bd-зависимые
+  гейты **fail-open** (нет `bd` → return 0, не exit 2); `first_substantial_write…`
+  читает `.beads/issues.jsonl` как fallback; `bd prime` на SessionStart guard'нут
+  `command -v bd`. toolchain-неполнота = WARN (вердикт не краснеет).
+- **Онбординг для людей:** [`docs/GETTING_STARTED.md`](../../../docs/GETTING_STARTED.md).
+- **Почему раньше не ставилось само:** [`docs/why-harness-not-installed-5-whys.md`](../../../docs/why-harness-not-installed-5-whys.md).
+
 ## ⚠️ Что verifier ПРОВЕРЯЕТ и что НЕ проверяет (честный scope, RCA design-review 2026-06-07)
 
 Verifier проверяет **wiring (подключение)**, НЕ **runtime-эффективность**:

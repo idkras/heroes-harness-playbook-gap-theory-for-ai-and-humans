@@ -1,0 +1,87 @@
+# harness-workflow.yaml — SSOT жизненного цикла харнесса.
+#
+# Зачем: единый источник правды о том, ЧТО происходит после клона, КАК харнесс
+# сам себя ставит, и КАК он остаётся работоспособным, пока toolchain ещё не встал.
+# На этот файл ссылается scripts/harness_bootstrap.py (вердикт getting_started).
+
+version: 1
+project: mike-harness-template
+
+# ─────────────────────────────────────────────────────────────────────────────
+getting_started:
+  intent: >
+    Новый пользователь делает `git clone` и открывает репо в Claude Code / Codex.
+    Дальше — НИЧЕГО руками. Харнесс сам активирует обвязку и доустанавливает
+    инструментарий, печатая чеклист в чат. Если открыто не в агенте — одна команда.
+
+  manual_entrypoint: "bash scripts/setup/install_all.sh"   # idempotent; --check для read-only
+  onboarding_doc: "docs/GETTING_STARTED.md"
+  rca_why_not_auto_before: "docs/why-harness-not-installed-5-whys.md"
+
+  session_start_chain:            # порядок хуков на SessionStart (см. .claude/settings.json)
+    - step: bootstrap
+      run: "python3 $CLAUDE_PROJECT_DIR/scripts/harness_bootstrap.py"
+      does:
+        - chmod +x хукам и скриптам
+        - портабилизация абсолютных путей → $CLAUDE_PROJECT_DIR
+        - "toolchain: marker-guarded авто-запуск install_all.sh (один раз после клона)"
+        - "verify: checksum-манифест (полнота+целостность) + harness wiring (gaps==0)"
+        - печать чеклиста getting-started PASS/WARN/FAIL
+      blocking: false             # best-effort, exit 0 — не ломает сессию
+    - step: bd_prime
+      run: "command -v bd >/dev/null 2>&1 && bd prime --hook-json || true"
+      does: ["контекст beads-воркфлоу в сессию"]
+      guard: "no-op пока bd не установлен — SessionStart не падает"
+
+# ─────────────────────────────────────────────────────────────────────────────
+toolchain:                        # что ставит install_all.sh (idempotent)
+  required:
+    - {name: python-venv, provides: ".venv + requirements.txt (pytest, PyYAML, networkx)"}
+    - {name: bd,   provides: "beads — задачник (AI-native issue tracker)"}
+    - {name: dolt, provides: "Dolt DB — движок под beads ('DAC DB' на слух)"}
+    - {name: bd-init, provides: ".beads/ (или резолв workspace через 'bd list')"}
+  optional:
+    - {name: graphify, status: canonical-only,
+       note: "НЕ входит в публичный шаблон; граф задач через 'bd graph' + networkx"}
+  verify: "bash scripts/setup/install_all.sh --check   # exit!=0 если неполно"
+
+# ─────────────────────────────────────────────────────────────────────────────
+graceful_degradation:             # ИНВАРИАНТ: харнесс работает, пока toolchain не встал
+  principle: >
+    После синка с git и ДО полной установки харнесс остаётся рабочим. Ни один
+    хук не должен жёстко блокировать пользователя из-за отсутствия bd/Dolt/deps.
+  guarantees:
+    - "core хуки/скрипты — stdlib-only: работают без .venv и без сторонних пакетов"
+    - "bd-зависимые PreToolUse-гейты fail-open: нет bd → return 0 (не exit 2)"
+    - "first_substantial_write_branch_bead_gate: при отказе 'bd list' читает .beads/issues.jsonl (коммитится в репо)"
+    - "все гейты ловят исключения и fail-open (turn не ломается)"
+    - "bd prime на SessionStart guard'нут 'command -v bd' — no-op без bd"
+    - "toolchain incomplete → шаг WARN (не FAIL): вердикт не краснеет, в DETAIL точная команда"
+  bd_dependent_hooks:             # все проверены на fail-open
+    - .claude/hooks/first_substantial_write_branch_bead_gate.py  # + jsonl fallback
+    - .claude/hooks/branch_name_bead_ref_check.py
+    - .claude/hooks/userprompt_branch_bead_nudge.py
+    - .claude/hooks/bd_anti_legend_gate.py
+    - .claude/hooks/pr_bead_jtbd_ref_check.py
+
+# ─────────────────────────────────────────────────────────────────────────────
+change_lifecycle:                 # бизнес-процесс правки (принуждается хуками)
+  - bd create --title="JTBD: Когда <ситуация>, хотим <результат>" --type=task
+  - python3 scripts/make_worktree.py <bead-id> --claim   # свой worktree+ветка
+  - "{project}.todo.md — критическая цепочка (скил 1-critical-chain-status-report)"
+  - правки в worktree (PreToolUse-гейты следят за чистотой и структурой)
+  - "quality gates: pytest / валидаторы скилов / checksum --verify"
+  - merge ветки → main (скил 5-land-to-main-mechanical)
+  - bd close <id> + (по профилю прав) git push / bd dolt push
+
+profiles:                         # права агента (CLAUDE.md)
+  conservative: "по умолчанию — не коммитит/пушит сам, отчитывается и ждёт"
+  team_maintainer: "opt-in — закрывает beads, гоняет гейты, коммитит, пушит"
+
+# ─────────────────────────────────────────────────────────────────────────────
+skills_index:                     # куда смотреть
+  install_and_onboarding: ["docs/GETTING_STARTED.md", "scripts/setup/install_all.sh"]
+  task_tracking: ".agents/skills/1-change-task-and-project-state-via-beads"
+  critical_chain: ".agents/skills/1-critical-chain-status-report"
+  portability_and_harness: ".agents/skills/0-governance-harness-portability"
+  land_to_main: ".agents/skills/5-land-to-main-mechanical"

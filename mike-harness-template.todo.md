@@ -1,16 +1,16 @@
 # mike-harness-template.todo.md
 
-**Bead:** mike-harness-template-uy8
-**JTBD:** Когда участник клонирует харнесс из git, хотим чтобы установка всего
-(beads/Dolt/python-deps) и getting-started запускались автоматически, без ручных шагов.
+**Bead:** mike-harness-template-59m
+**JTBD:** Когда новый пользователь синкает харнесс из git и toolchain ещё не
+доустановлен, хотим чтобы харнесс работал (graceful degradation) и сам
+доустанавливался — прописать через скилы / harness-workflow.yaml / хуки.
 
 ## Critical chain
 
-- [x] RCA: почему toolchain не ставился по умолчанию → 5 Whys (`docs/why-harness-not-installed-5-whys.md`)
-- [x] `scripts/setup/install_all.sh` — idempotent установщик всего toolchain
-- [x] `scripts/harness_bootstrap.py` — авто-запуск установщика на SessionStart (marker-guarded) + шаг `toolchain`
-- [x] `docs/GETTING_STARTED.md` — что Мише знать про харнесс, скилы, агентов, как ставить/запускать задачи
-- [x] `requirements.txt` — добавить networkx (граф зависимостей)
-- [x] README/CHANGELOG обновить
-- [ ] regen checksum-манифест (новые/изменённые harness-файлы)
+- [x] `harness-workflow.yaml` — SSOT (getting_started, toolchain, graceful_degradation, lifecycle); закрыта висячая ссылка bootstrap §getting_started
+- [x] `bd prime` SessionStart guard `command -v bd` (no-op до установки)
+- [x] аудит bd-зависимых хуков на fail-open (5/5 деградируют) + jsonl fallback
+- [x] секция в скиле 0-governance-harness-portability
+- [ ] фальсификация: bd вне PATH → gate не блокирует, bootstrap зелёный
+- [ ] regen checksum + verify
 - [ ] land → origin/main
