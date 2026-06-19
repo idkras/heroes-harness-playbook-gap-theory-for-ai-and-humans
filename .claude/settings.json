@@ -2,117 +2,126 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Write|Edit|NotebookEdit",
         "hooks": [
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/expected_output_announce_check.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/expected_output_announce_check.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/standards_creation_routing_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/standards_creation_routing_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/first_substantial_write_branch_bead_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/first_substantial_write_branch_bead_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/reusable_script_belongs_in_skill_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/reusable_script_belongs_in_skill_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/detachable_skill_packaging_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/detachable_skill_packaging_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/docs_client_doc_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/docs_client_doc_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/root_new_entry_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/root_new_entry_gate.py",
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": "Write|Edit|NotebookEdit"
       },
       {
-        "matcher": "Bash",
         "hooks": [
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/untracked_critical_files_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/untracked_critical_files_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_name_bead_ref_check.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_name_bead_ref_check.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/rickai_pipeline_output_path_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/rickai_pipeline_output_path_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/git_worktree_completeness_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/git_worktree_completeness_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_name_bead_ref_check.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_name_bead_ref_check.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_ownership_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/branch_ownership_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/worktree_isolation_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/worktree_isolation_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/root_new_entry_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/root_new_entry_gate.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/pr_bead_jtbd_ref_check.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/pr_bead_jtbd_ref_check.py",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/bd_anti_legend_gate.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/bd_anti_legend_gate.py",
+            "type": "command"
           }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/harness_guardian_check.py"
-          },
-          {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/review_artifact_chat_relay_check.py"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/userprompt_branch_bead_nudge.py"
-          }
-        ]
+        ],
+        "matcher": "Bash"
       }
     ],
     "SessionStart": [
       {
         "hooks": [
           {
-            "type": "command",
-            "command": "python3 $CLAUDE_PROJECT_DIR/scripts/harness_bootstrap.py"
+            "command": "python3 $CLAUDE_PROJECT_DIR/scripts/harness_bootstrap.py",
+            "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "bd prime --hook-json",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/harness_guardian_check.py",
+            "type": "command"
+          },
+          {
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/review_artifact_chat_relay_check.py",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/userprompt_branch_bead_nudge.py",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
       }
     ]
   }
