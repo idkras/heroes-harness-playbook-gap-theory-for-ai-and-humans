@@ -105,12 +105,20 @@ if command -v bd >/dev/null 2>&1; then
   fi
 fi
 
-# ---------------------------------------------------------------- 6. graphify (опц.)
-if command -v graphify >/dev/null 2>&1; then
-  ok "graphify present"
+# ---------------------------------------------------------------- 6. graphify
+# Публичный graphify (scripts/graphify.py на networkx): строит graphify-out/graph.json
+# из beads + harness-workflow.yaml. Заменяет canonical-only graphify.
+GPY="$ROOT/scripts/graphify.py"
+PYBIN="python3"; [ -x ".venv/bin/python" ] && PYBIN=".venv/bin/python"
+if [ -f "$GPY" ] && "$PYBIN" -c "import networkx" >/dev/null 2>&1; then
+  if [ "$CHECK" = 1 ]; then
+    "$PYBIN" "$GPY" --check >/dev/null 2>&1 && ok "graphify graph fresh" || { miss "graphify graph отсутствует/устарел (python3 scripts/graphify.py)"; }
+  else
+    act "graphify build → graphify-out/graph.json"
+    "$PYBIN" "$GPY" >/dev/null 2>&1 && ok "graphify built (scripts/graphify.py, networkx)" || miss "graphify build failed"
+  fi
 else
-  miss "graphify: optional/canonical-only — НЕ входит в публичный шаблон."
-  printf '       граф зависимостей доступен через: bd graph (+ networkx в .venv)\n'
+  miss "graphify: нужен networkx (см. requirements.txt) — граф также через 'bd graph'"
 fi
 
 echo

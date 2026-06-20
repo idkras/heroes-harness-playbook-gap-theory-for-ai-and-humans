@@ -44,3 +44,6 @@ public/
 *.db
 .beads-credential-key
 .beads/proxieddb/
+
+# graphify generated output (rebuilt by scripts/graphify.py)
+graphify-out/

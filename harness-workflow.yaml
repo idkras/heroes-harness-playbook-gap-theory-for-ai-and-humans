@@ -40,10 +40,13 @@ toolchain:                        # что ставит install_all.sh (idempote
     - {name: bd,   provides: "beads — задачник (AI-native issue tracker)"}
     - {name: dolt, provides: "Dolt DB — движок под beads ('DAC DB' на слух)"}
     - {name: bd-init, provides: ".beads/ (или резолв workspace через 'bd list')"}
-  optional:
-    - {name: graphify, status: canonical-only,
-       note: "НЕ входит в публичный шаблон; граф задач через 'bd graph' + networkx"}
+    - {name: graphify, provides: "scripts/graphify.py (networkx) → graphify-out/graph.json — граф задач(beads)+процесса(этот файл)"}
   verify: "bash scripts/setup/install_all.sh --check   # exit!=0 если неполно"
+  graphify:
+    build:  "python3 scripts/graphify.py"
+    doctor: "python3 scripts/graphify.py --doctor"
+    source: ["beads (bd list / bd graph --all --dot)", "harness-workflow.yaml"]
+    output: "graphify-out/graph.json (gitignored, node-link networkx)"
 
 # ─────────────────────────────────────────────────────────────────────────────
 graceful_degradation:             # ИНВАРИАНТ: харнесс работает, пока toolchain не встал

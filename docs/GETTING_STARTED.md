@@ -32,9 +32,9 @@ DETAIL написана точная команда.
   `config/`. Это «иммунная система» репо: гейты, которые **принуждают** держать
   чистоту (ветка+задача перед правкой, структура папок, целостность файлов).
 
-«DAC DB» (на слух) = **Dolt DB** — БД-движок под задачником `beads`. «Graphify» —
-опциональный canonical-only инструмент графа зависимостей (в шаблон не входит;
-граф задач доступен через `bd graph` + `networkx`).
+«DAC DB» (на слух) = **Dolt DB** — БД-движок под задачником `beads`. «Graphify» =
+`scripts/graphify.py` (на networkx) — строит граф зависимостей задач(beads)+процесса
+(`harness-workflow.yaml`) в `graphify-out/graph.json`: `python3 scripts/graphify.py`.
 
 ---
 
@@ -156,5 +156,6 @@ python3 .claude/hooks/harness_guardian_check.py  # живой статус harne
 ```
 
 Что ставит установщик: `.venv` + `requirements.txt` (pytest, PyYAML, networkx),
-`bd` (beads), `dolt`, `bd init`. `graphify` — помечается optional (нет публичного
-источника). Подробности почему так — `docs/why-harness-not-installed-5-whys.md`.
+`bd` (beads), `dolt`, `bd init`, и собирает граф **graphify** (`scripts/graphify.py`
+→ `graphify-out/graph.json`). Подробности почему раньше не ставилось —
+`docs/why-harness-not-installed-5-whys.md`. Ведение проектов — `projects/README.md`.
