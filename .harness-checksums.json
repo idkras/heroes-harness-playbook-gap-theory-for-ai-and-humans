@@ -45,8 +45,6 @@
     ".agents/skills/5-sync-github-checklist/scripts/github_sync_telemetry.py": "a971fe0c9b50f8541e9c407e3b490a285efb440e80e78266e3d8c886f1ff08dd",
     ".agents/skills/5-sync-github-checklist/workflow.yaml": "b2759a0d89decd7b16a35722823e3a6dc23a844655e08fb561474f57d2a6f065",
     ".agents/skills/agent-reasoning-log/SKILL.md": "851ebd3e4df09a18a4dbda26b859b180ef188145a83a931e3d2d8bd13bf3b394",
-    ".agents/skills/beads/SKILL.md": "1a621606cfa9a14cbacff84bf5c496b4c2c175c2df329e8d19d4e01fc989dedd",
-    ".agents/skills/beads/agents/openai.yaml": "c7ff618a9a6bcce71b25f722f67861b7685651d08fb72d8fff7d947aac403718",
     ".agents/skills/critical-chain-design/SKILL.md": "3bb7301b998227c57022c29422bdba3c8f7f68bd10364a847a65906032c8f55d",
     ".claude/hooks/bd_anti_legend_gate.py": "10481c31e8dd332b716b029c43ccd6d3aced3be27cf96d49834a719edc5f5a53",
     ".claude/hooks/branch_name_bead_ref_check.py": "1e785326631db478a446c852f5cfb7d9a89fdf4854f38bfa435f9bb8bb5d3427",
@@ -81,7 +79,7 @@
     "scripts/validate_skill_contract.py": "aa5281e78068074adaa6044375487a5d470ba1532a4f959713ba3b950a34ada4"
   },
   "generated_for": "heroes-playbook-gap-theory-for-ai-and-humans",
-  "n_files": 79,
+  "n_files": 77,
   "roots": [
     ".claude/hooks",
     ".claude/settings.json",
