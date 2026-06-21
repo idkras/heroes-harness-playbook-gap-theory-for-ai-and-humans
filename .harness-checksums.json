@@ -9,7 +9,7 @@
     ".agents/skills/0-document-creation-guard/skill.yaml": "72083fa72b85b70d90e358bb19f7b08c2bdf732a0429f14f64a2923b8fe8b1f5",
     ".agents/skills/0-governance-harness-portability/SKILL.md": "fa1a32434648138bb0a5a282c2dbde31140e0f27c0aeff08a70f1d85df4d263c",
     ".agents/skills/0-governance-harness-portability/harness-manifest.json": "451e08dc4dfd69bd6e7df9ed92ff3b7699d53230a6b08437f5a4ed7d5dd92918",
-    ".agents/skills/0-governance-harness-portability/scripts/harness_doctor.py": "df6cce01e8ae7be75c52f560629919cf83ebe9bc392680fb79bfe30915b2bebc",
+    ".agents/skills/0-governance-harness-portability/scripts/harness_doctor.py": "43c22b8940af7ce34969e139f0f7ad42a3e79817978474d4cffa7656e89a1eec",
     ".agents/skills/0-governance-harness-portability/scripts/verify_harness_wiring.py": "ac90380680c91fc094fec84194ed6e8443e052040f720589b37cfe1546b52cad",
     ".agents/skills/0-governance-harness-portability/skill.yaml": "4a71a10fac64ed8ffefa64fe50705ce2412128ace8f62c9b2c68fcea72bc8bd4",
     ".agents/skills/0-governance-harness-portability/tests/test_verify_harness_wiring.py": "1c9f13f77d29cbc0cf0897dbf245db3c2bb31ee7173eafec1e70d3191bfc01c8",
@@ -77,7 +77,7 @@
     "scripts/harness_template_checksum.py": "703763bfa3d4529978082c05b6fdfc285819f965480f2cb87333d5a98d1879ec",
     "scripts/make_worktree.py": "a39224732cba243b781e250e79c13940ed967c63d43c392b59bce24b6f7c4513",
     "scripts/root_structure_router.py": "42b353acd18b50133fee88c4a6333e3e1873ce1ee3ec0275f46785ed51fdf301",
-    "scripts/setup/install_all.sh": "850c98948cea74c42e2fe77b7d56b073890ad1992aad5946a85b289250418033",
+    "scripts/setup/install_all.sh": "e224bf43f8a5c2ee2e64e9df43cae891b6f6943a2c244ce1775f05d8e5bc494d",
     "scripts/validate_skill_contract.py": "aa5281e78068074adaa6044375487a5d470ba1532a4f959713ba3b950a34ada4"
   },
   "generated_for": "heroes-playbook-gap-theory-for-ai-and-humans",

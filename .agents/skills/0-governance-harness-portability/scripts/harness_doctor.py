@@ -217,6 +217,18 @@ class Doctor:
         self.add("local_only", "untracked", PASS if not tracked else FAIL,
                  ".beads not tracked (partners never inherit it)" if not tracked
                  else ".beads IS tracked in git → git rm -r --cached .beads")
+        # bd-hygiene: bd init pollutes the harness (RCA 2026-06-21) — hooksPath hijack +
+        # vendor boilerplate in AGENTS.md. install_all.sh neutralizes; flag if it didn't.
+        rc, hp = run(["git", "config", "--get", "core.hooksPath"], self.root)
+        hp_bad = ".beads" in hp
+        agents = self.root / "AGENTS.md"
+        boiler = agents.exists() and "BEGIN BEADS INTEGRATION" in agents.read_text(encoding="utf-8", errors="replace")
+        if not hp_bad and not boiler:
+            self.add("local_only", "bd-hygiene", PASS, "no bd hooksPath hijack / no vendor boilerplate")
+        else:
+            why = ([f"core.hooksPath={hp}"] if hp_bad else []) + (["AGENTS.md bd-boilerplate"] if boiler else [])
+            self.add("local_only", "bd-hygiene", FAIL,
+                     f"bd init polluted harness ({', '.join(why)}) → bash scripts/setup/install_all.sh")
 
     # ── skills index ─────────────────────────────────────────────────────────
     def check_skills(self, ssot: dict | None) -> None:

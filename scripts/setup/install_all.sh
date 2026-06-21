@@ -101,7 +101,25 @@ if command -v bd >/dev/null 2>&1; then
   elif [ "$CHECK" = 1 ]; then
     miss ".beads not initialized"; MISSING=1
   else
-    act "bd init"; bd init >/dev/null 2>&1 && ok "bd init done" || miss "bd init failed (запусти 'bd init' вручную)"
+    act "bd init (+harness-safe neutralize)"
+    if bd init >/dev/null 2>&1; then
+      # RCA 2026-06-21: bd init POLLUTES the harness — it reformats .claude/settings.json
+      # (a checksummed file → checksum verify FAILS → harness reads BROKEN), injects
+      # vendor boilerplate into AGENTS.md/CLAUDE.md, repoints core.hooksPath → .beads/hooks
+      # (bd hooks hijack git + re-inject on every op), and enables export.git-add (stages
+      # .beads). Undo all of it so the harness stays clean and beads stays LOCAL-ONLY.
+      bd config set export.git-add false >/dev/null 2>&1 || true
+      git -C "$ROOT" config --unset core.hooksPath >/dev/null 2>&1 || true
+      git -C "$ROOT" checkout -- AGENTS.md .claude/settings.json >/dev/null 2>&1 || true
+      if git -C "$ROOT" ls-files --error-unmatch CLAUDE.md >/dev/null 2>&1; then
+        git -C "$ROOT" checkout -- CLAUDE.md >/dev/null 2>&1 || true   # restore tracked symlink
+      else
+        rm -f "$ROOT/CLAUDE.md"                                       # drop bd's fresh copy
+      fi
+      ok "bd init done (neutralized: git-add off · hooksPath reset · harness files restored)"
+    else
+      miss "bd init failed (запусти 'bd init' вручную)"
+    fi
   fi
 fi
 
