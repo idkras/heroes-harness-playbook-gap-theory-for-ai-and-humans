@@ -1,8 +1,12 @@
-# harness-workflow.yaml — SSOT жизненного цикла харнесса.
+# harness-workflow.yaml — ЕДИНЫЙ SSOT харнесса (жизненный цикл + состав проектного слоя).
 #
 # Зачем: единый источник правды о том, ЧТО происходит после клона, КАК харнесс
-# сам себя ставит, и КАК он остаётся работоспособным, пока toolchain ещё не встал.
-# На этот файл ссылается scripts/harness_bootstrap.py (вердикт getting_started).
+# сам себя ставит, КАК он остаётся работоспособным пока toolchain не встал, и КАК
+# ведутся проекты (projects/ symlink Kanban + оркестратор). На этот файл ссылается
+# scripts/harness_bootstrap.py (вердикт getting_started) и projects/README.md.
+#
+# Один SSOT, без дублей: wiring-проекция хуков — harness-manifest.json (derived,
+# verify_harness_wiring.py); состав/распределение — здесь. Нет второго *workflow*ssot*.yaml.
 
 version: 1
 project: mike-harness-template
@@ -82,9 +86,42 @@ profiles:                         # права агента (CLAUDE.md)
   team_maintainer: "opt-in — закрывает beads, гоняет гейты, коммитит, пушит"
 
 # ─────────────────────────────────────────────────────────────────────────────
+# PROJECT MANAGEMENT — projects/ symlink Kanban. Owner 2026-06-20: «папка projects/
+# в корне; all-projects + симлинки в 5 НУМЕРОВАННЫХ lane по статусу; проект один-к-
+# одному с Bits Ticket (bead=JTBD) и worktree; вести проекты по оркестратору».
+project_management:
+  root: projects/
+  master_dir: projects/all-projects     # каждый проект физически живёт здесь один раз
+  lanes:                                # ровно один симлинк ../all-projects/<name> на проект; папки НУМЕРОВАНЫ
+    - { id: backlog,         folder: "projects/1. backlog",         bead: "open (backlog/next)" }
+    - { id: dod-n-blocked,   folder: "projects/2. dod-n-blocked",   bead: "dod_blocked label / blocked status (override)" }
+    - { id: in-progress,     folder: "projects/3. in-progress",     bead: "in_progress (in_design/in_review/rework)" }
+    - { id: to-delivery,     folder: "projects/4. to-delivery",     bead: "delivering/owner_received" }
+    - { id: verify-and-done, folder: "projects/5. verify-and-done", bead: "closed (override) / outcome_realized" }
+  naming_chain: "JTBD title → bead pr-rick-<id> (Bits Ticket) → branch/worktree pr-rick-<slug>-<id> → project folder == branch basename → PR"
+  skill:          .agents/skills/1-project-create-launch         # SKILL.md + workflow.yaml + lanes.json + scripts/ + tests/
+  lifecycle_ssot: .agents/skills/1-project-create-launch/workflow.yaml   # P1–P7+B стадии + переходы симлинков
+  mapping_ssot:   .agents/skills/1-project-create-launch/lanes.json      # bead status/labels → lane
+  mover:          .agents/skills/1-project-create-launch/scripts/project_status_symlinks.py  # init/new/move/sync/sync-all/link/board/doctor
+  install_REQUIRED:                     # выполнить при установке харнесса
+    scaffold: "python3 .agents/skills/1-project-create-launch/scripts/project_status_symlinks.py init  (all-projects + 5 нумерованных lane; идемпотентно)"
+    run_by_orchestrator: "КАЖДЫЙ проект ведётся через skill 19-orchestrator-pipeline (12 стадий + self-falsification/QA/design гейты); lane = текущая стадия"
+    verify: "project_status_symlinks.py doctor → exit 0 (нет orphan/broken/wrong-target/drift/multi-lane)"
+
+# LOCAL-ONLY — beads + dolt: per-install, НЕ часть состава, НЕ коммитится, НЕ едет в mirror.
+# Owner 2026-06-20: «beads и dolt инициализируются локально; партнёры и клиенты не тянут это».
+local_only:
+  beads_dolt:
+    paths: [".beads/", ".dolt/"]
+    rule: "gitignored; каждый owner/partner/client делает `bd init` сам (toolchain.required.bd-init); публичный template не отгружает bead-БД/dolt-историю"
+    checksum: "EXCLUDE_PARTS{.beads,.dolt} — не checksummed"
+    degradation: "нет .beads → bd-зависимые гейты fail-open (см. graceful_degradation)"
+
+# ─────────────────────────────────────────────────────────────────────────────
 skills_index:                     # куда смотреть
   install_and_onboarding: ["docs/GETTING_STARTED.md", "scripts/setup/install_all.sh"]
   task_tracking: ".agents/skills/1-change-task-and-project-state-via-beads"
+  project_lifecycle: ".agents/skills/1-project-create-launch"   # projects/ Kanban: create/move/sync проекты
   critical_chain: ".agents/skills/1-critical-chain-status-report"
   portability_and_harness: ".agents/skills/0-governance-harness-portability"
   land_to_main: ".agents/skills/5-land-to-main-mechanical"

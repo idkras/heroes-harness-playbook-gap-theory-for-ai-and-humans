@@ -39,11 +39,13 @@ public/
 .claude/.state/
 .claude/settings.local.json
 
-# Beads / Dolt files (added by bd init)
+# Task tracker — beads + embedded dolt. LOCAL-ONLY, per-install: each owner/partner/
+# client runs `bd init` themselves; the public template never ships a bead DB, so
+# nobody drags another team's tickets or dolt history. (Also excluded from checksum + mirror.)
+.beads/
 .dolt/
 *.db
 .beads-credential-key
-.beads/proxieddb/
 
 # graphify generated output (rebuilt by scripts/graphify.py)
 graphify-out/

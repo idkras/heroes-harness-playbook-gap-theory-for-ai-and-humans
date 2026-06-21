@@ -1,0 +1,169 @@
+version: 1
+id: project-create-launch-and-kanban-lifecycle
+title: Project lifecycle — create, run, and move through the projects/ symlink Kanban
+
+# ─────────────────────────────────────────────────────────────────────────────
+# This workflow.yaml is the human SSOT for the project lifecycle and for how a
+# project moves between the four lane folders as symlinks. The MACHINE SSOT for
+# the status->lane mapping is lanes.json (this file documents and must agree with
+# it). The mechanics are in scripts/project_status_symlinks.py.
+# ─────────────────────────────────────────────────────────────────────────────
+
+owner_jtbd:
+  when: "новая работа стартует или меняет статус, а у команды нет одного места, где видно какой проект на какой стадии и где его тикет/worktree."
+  actor: "агент или человек, который ведёт проекты в этом репозитории."
+  want: "каждый проект жил один раз в projects/all-projects/, был один-к-одному с bead-тикетом и worktree, и автоматически монтировался симлинком в ровно одну lane-папку по статусу его bead."
+  so_that: "owner и следующий агент видят канбан-доску (backlog → in-progress → to-delivery → verify-and-done) просто открыв папку, без расшифровки opaque id."
+
+# The naming chain — one continuous identifier, project == bead == worktree == branch.
+naming_chain:
+  jtbd_title: "Когда ..., хотим ..., чтобы ...   (источник имени; задаёт slug)"
+  bead: "pr-rick-<id>  — Bits Ticket, durable обязательство, primary tracker (.beads)"
+  branch: "pr-rick-<jtbd-slug>-<bead-id>"
+  worktree: "basename == branch (.claude/worktrees/pr-rick-<jtbd-slug>-<bead-id>)"
+  project_folder: "projects/all-projects/<jtbd-slug>-<bead-id>/  (== worktree/branch basename)"
+  pr_title: "тот же JTBD язык — gh pr create --title='Когда ..., хотим ...'"
+  rule: "один разрыв в цепочке (opaque branch slug, project folder без bead, bead без worktree) блокирует claim «project launch завершён» — см. self_falsification."
+
+# The five NUMBERED lanes (the symlink Kanban). SSOT of the mapping = lanes.json.
+# Folders are numbered ('N. name') so a file explorer sorts them in lifecycle order;
+# the CLI uses the short id (move/sync <name> <id>), not the number.
+lanes:
+  - id: backlog
+    folder: "projects/1. backlog"
+    label: "Backlog"
+    means: "сырой тикет/идея; owner/PM ведёт список, деталей ещё нет. Новый проект приземляется сюда на `bd create` (status open)."
+    bead: "status open (labels backlog/next)"
+  - id: dod-n-blocked
+    folder: "projects/2. dod-n-blocked"
+    label: "DoD & Blocked"
+    means: "GATE: тикет детализируется в bead (DoD/output/outcome/спека/требования) ДО запуска в работу; сюда же паркуется blocked-тикет до снятия named blocker. Std 4.15 dod_blocked."
+    bead: "label dod_blocked ИЛИ status blocked (оба → override на этот lane)"
+  - id: in-progress
+    folder: "projects/3. in-progress"
+    label: "In Progress"
+    means: "spec одобрен, идёт реализация и параллельное ревью."
+    bead: "status in_progress (labels in_design/in_progress/in_review/rework)"
+  - id: to-delivery
+    folder: "projects/4. to-delivery"
+    label: "To Delivery"
+    means: "ревью пройдено; артефакт отдаётся owner/команде/клиенту, ждём приёма/активации."
+    bead: "label delivering/hypothesis_validation/hypothesis_confirmed/owner_received"
+  - id: verify-and-done
+    folder: "projects/5. verify-and-done"
+    label: "Verify & Done"
+    means: "owner активировал артефакт; проверяем что JTBD-outcome материализовался, затем bead closed и reachable из origin/main."
+    bead: "status closed (override) ИЛИ label outcome-check/owner_activated/outcome_realized/owner-got-output"
+
+# Lifecycle stages — the full list of project states, mapped to the lanes above
+# and to the canonical sources (Standard 4.15 board, 1-project-states-best-practices P1–P7,
+# skill 19 orchestrator 12-stage pipeline).
+lifecycle_stages:
+  - stage: P1-intake
+    lane: backlog
+    orchestrator_stage: "1 Intake"
+    enter: "новый запрос owner/client/partner; bead-а ещё нет или open без scope."
+    exit_gate: "запрос прочитан целиком; audience определена; дубликаты проверены."
+    driven_by: ["1-project-create-launch", "1-change-task-and-project-state-via-beads"]
+  - stage: P2-ready-for-dev
+    lane: dod-n-blocked
+    orchestrator_stage: "2 Outcome design + 3 Hypothesis + 4 Expected-output + 5 Generalization gate"
+    enter: "scope понятен; тикет берётся на DoD-gate (детализация спеки) перед запуском в работу."
+    exit_gate: "bead создан; {name}.todo.md на диске; критическая цепочка 3–5 звеньев; expected-output announced; outcome != output; 4×yes если код/UI."
+    driven_by: ["1-project-create-launch", "1-critical-chain-status-report", "critical-chain-design"]
+    symlink_move: "move <name> dod-n-blocked (или label dod_blocked → sync)"
+  - stage: P3-in-dev
+    lane: in-progress
+    orchestrator_stage: "6 Implementation"
+    enter: "исполнение начато (внутри worktree), появляются side-effects."
+    exit_gate: "каждый слой = self-contained commit; main green; side-effects закрыты в этой сессии."
+    driven_by: ["5-git-parallel-coordination", "1-change-task-and-project-state-via-beads"]
+    symlink_move: "move <name> in-progress (или sync после `bd update --status in_progress --claim`)"
+  - stage: P4-review
+    lane: in-progress
+    orchestrator_stage: "7 Self-falsification + 8 QA gate + 9 Design gate (+ 10 RCA if gap)"
+    enter: "артефакт готов вчерне."
+    exit_gate: "self-falsification verdict=confirmed; параллельный squad (code-reviewer + ui-qa-engineer + design-art-director); 0 critical/blocking открыто."
+    driven_by: ["2-hypothesis-gap-falsification", "skill:19-orchestrator-pipeline"]
+  - stage: P5-delivery
+    lane: to-delivery
+    orchestrator_stage: "11 Delivery (12 mandatory sections)"
+    enter: "review пройден, артефакт отдаётся owner/команде/клиенту."
+    exit_gate: "pre-flight target прочитан; backing-work reachable из origin/main; client-facing → CPR + screenshot; явный owner go."
+    driven_by: ["5-sync-github-checklist", "5-land-to-main-mechanical"]
+    symlink_move: "move <name> to-delivery (или sync после label delivering/owner_received)"
+  - stage: P6-outcome-verified
+    lane: verify-and-done
+    orchestrator_stage: "12 Outcome verify"
+    enter: "артефакт доставлен; проверяем что закрыл JTBD owner-а (не только output)."
+    exit_gate: "gap table verdict; confirmed/partial → 5×so-what + JTBD owner одной фразой; каждая owner-инструкция = строка coverage."
+    driven_by: ["2-so-what-outcome-ladder", "2-hypothesis-gap-falsification"]
+    symlink_move: "move <name> verify-and-done (или sync после label outcome_realized)"
+  - stage: P7-closed
+    lane: verify-and-done
+    orchestrator_stage: "after 12 — close"
+    enter: "outcome подтверждён."
+    exit_gate: "bead closed + label owner-got-output ПЕРЕД reflection; registry/todo обновлён; nothing-lost (reachable из origin/main); worktree pruned."
+    driven_by: ["1-close-task-or-project-cleanly", "5-sync-github-checklist"]
+  - stage: B-blocked
+    lane: dod-n-blocked
+    orchestrator_stage: "off-path"
+    enter: "named blocker (внешняя зависимость / owner-go / broken main)."
+    exit_gate: "blocker снят → вернуться в lane-источник через sync."
+    driven_by: ["1-change-task-and-project-state-via-beads"]
+    symlink_move: "bd update <id> --status blocked → sync → возвращается в '2. dod-n-blocked' (override)"
+
+# Symlink transition contract — what the mover guarantees on every move/sync.
+symlink_transitions:
+  invariant_single_lane: "каждый проект смонтирован в РОВНО одну lane-папку (move/place_link сначала clear_links по всем lane, потом создаёт одну)."
+  invariant_relative_target: "симлинк всегда относительный: <lane>/<name> -> ../all-projects/<name> (репозиторий переносим/клонируется без починки путей)."
+  invariant_physical_home: "проект физически живёт ТОЛЬКО в all-projects/; lane-папки содержат только симлинки."
+  derivation: "sync читает bead (если .beads доступен) → status+labels → lane по lanes.json; иначе .project-status маркер; иначе default backlog."
+  reconcile: "sync-all переустанавливает симлинки всех проектов; doctor ловит orphan/broken/wrong-target/drift/unmapped/multi-lane/unmounted."
+
+# Install-time requirement (см. harness-workflow.yaml §project_management.install_REQUIRED).
+install:
+  scaffold: "python3 .agents/skills/1-project-create-launch/scripts/project_status_symlinks.py init  — создаёт projects/all-projects + 5 нумерованных lane до любого проекта (идемпотентно)."
+  orchestrator: "каждый проект ведётся через skill 19-orchestrator-pipeline (12 стадий); lane проекта = текущая стадия оркестратора (см. lifecycle_stages.orchestrator_stage)."
+
+definition_of_done:
+  statement: "Project launch/lifecycle done means the project lives once in all-projects/, is one-to-one with a bead and worktree, and is mounted by exactly one lane symlink that matches its bead state."
+  required:
+    - id: project_in_all_projects
+      criterion: "projects/all-projects/<name>/ exists with {name}.todo.md (OUTPUT/OUTCOME) and .project-meta.json (bead_id)."
+      verify: "test -f projects/all-projects/<name>/<name>.todo.md"
+    - id: one_to_one_bead
+      criterion: "bead exists with JTBD title; .project-meta.json bead_id matches; branch/worktree basename == <name>."
+      verify: "bd show <bead-id> --json   (or .project-status fallback if no .beads)"
+    - id: exactly_one_lane
+      criterion: "<name> is a symlink in exactly one lane folder, pointing at ../all-projects/<name>."
+      verify: "python3 .agents/skills/1-project-create-launch/scripts/project_status_symlinks.py doctor"
+    - id: registry_reflected
+      criterion: "root todo.md / registry row reflects the project after the bead was created (bead-first, then reflection)."
+      verify: "grep <name> todo.md"
+
+acceptance_criteria:
+  - id: board_is_self_evident
+    pass: "Открыв projects/, owner видит 4 lane-папки + all-projects/; каждый активный проект симлинком в своей lane."
+    fail: "Проект существует в all-projects/, но не смонтирован ни в одну lane (doctor: unmounted)."
+  - id: status_drives_placement
+    pass: "Смена bead-статуса + sync перемещает симлинк автоматически в правильную lane."
+    fail: "Lane-папка расходится с bead-статусом и никто не запускал sync."
+  - id: no_orphans
+    pass: "doctor == OK: нет orphan/broken симлинков, нет проектов в >1 lane."
+    fail: "Симлинк указывает на несуществующий проект, или проект в двух lane сразу."
+
+self_falsification:
+  gate: "2-hypothesis-gap-falsification"
+  expectation: "bead title в форме 'Когда ..., хотим ...'; branch = pr-rick-<slug>-<bead-id>; project folder basename == branch; symlink в ровно одной lane соответствует bead-статусу."
+  on_gap: "создать follow-up bead, не заявлять «launch завершён»."
+
+related:
+  machine_ssot: lanes.json
+  mover: scripts/project_status_symlinks.py
+  skill: SKILL.md
+  canonical_sources:
+    - "Standard 4.15 symphony linear beads orchestration (12-status board §4.5.1)"
+    - "skill 1-project-states-best-practices (P1–P7 + B/R)"
+    - "skill 19-orchestrator-pipeline (12-stage pipeline)"
+    - "skill 1-change-task-and-project-state-via-beads (beads-first state changes)"

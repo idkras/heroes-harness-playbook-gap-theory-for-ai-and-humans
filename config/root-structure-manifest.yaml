@@ -55,6 +55,7 @@ allowed_dirs:
   - product-ops            # scenarios / skills / pattern-base
   - scripts                # workspace-level скрипты
   - tests                  # workspace-level тесты
+  - projects               # project-management symlink Kanban: all-projects/ + 5 numbered lanes (1.backlog…5.verify-and-done); work via beads/worktree/graphify. See projects/README.md + .agents/skills/1-project-create-launch
   - tooling                # tooling
   - config                 # конфиги (этот манифест здесь)
   - self-hosted            # self-hosted deploy
@@ -62,7 +63,6 @@ allowed_dirs:
   - exports                # output layer (gitignored) — НЕ junk: легитимный data-exports target
   - graphify-out           # output layer (gitignored): graph.json от scripts/graphify.py
   - docs                   # governance/onboarding whitelist (Document Creation Guard) — routing target
-  - projects               # реестр проектов харнесса; каждый проект ведётся через beads (см. projects/README.md). Owner-decision 2026-06-20: легитимизирован по запросу владельца
   # --- канонические content-папки (bracketed = knowledge/client SSOT) ---
   - "<internal-folder>"
   - "<internal-folder>"
@@ -247,7 +247,8 @@ owner_decision_dirs:
   # на dir, перечисленный здесь ИЛИ в junk_dirs. <client> → docs/, data-exports → exports/ —
   # docs и exports вынесены в allowed_dirs (легитимные output/whitelist слои), НЕ в owner_decision.
   # Router assert'ит этот инвариант в load_manifest (raise на нарушении).
-  # projects → перенесён в allowed_dirs (owner-decision 2026-06-20, bead mike-harness-template-wqm)
+  # projects → перенесён в allowed_dirs (owner-decision 2026-06-20): project-management
+  # symlink Kanban root (all-projects/ + 5 numbered lanes) — .agents/skills/1-project-create-launch.
   - marketing            # дубль <internal-folder> marketing/?
   - todo                 # дубль <internal-folder>/?
   - tools                # дубль tooling/?

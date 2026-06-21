@@ -1,0 +1,29 @@
+# Detachable-skill manifest — project lifecycle + projects/ symlink Kanban (Standard 0.3 §3.2).
+schema_version: 1
+name: 1-project-create-launch
+kind: code                  # code | knowledge — carries scripts/ + tests/ + lanes.json
+detachable: true            # stdlib-only; depends on a projects/ scaffold at repo root
+runtime: "python3.9+"
+deps:
+  external: []              # stdlib only (json/argparse/pathlib/subprocess/os)
+  workspace:
+    - "projects/ scaffold at repo root (all-projects/ + 4 lane folders)"
+  optional:
+    - "bd (beads) CLI — enables bead-driven lane derivation; absent → .project-status fallback"
+requires_skills:
+  - 1-change-task-and-project-state-via-beads
+requires_credentials: []
+entrypoints:
+  - path: scripts/project_status_symlinks.py
+    kind: cli
+    invoke: "python3 .agents/skills/1-project-create-launch/scripts/project_status_symlinks.py board"
+config:
+  - path: lanes.json
+    role: "SSOT: bead status/labels -> Kanban lane mapping"
+  - path: workflow.yaml
+    role: "SSOT: project lifecycle stages + symlink transition invariants"
+tests:
+  path: tests/
+  run: "python3 -m pytest .agents/skills/1-project-create-launch/tests/ -q"
+fixtures: []
+canonical_source: SKILL.md

@@ -1,0 +1,67 @@
+{
+  "schema_version": 2,
+  "description": "SSOT mapping bead status/labels -> projects/ Kanban lane (the symlink folder a project is mounted into). Read by scripts/project_status_symlinks.py and documented for humans in workflow.yaml. Lane FOLDERS are numbered ('N. name') so a file explorer sorts them in lifecycle order; lane IDS stay short for the CLI (move/sync use the id, not the number). Add a lane = one entry here; the script and workflow.yaml derive from it, never from an if-branch. Resolution: status_overrides win first, then label_overrides (blocked/dod_blocked pull to the DoD gate regardless of progress), else the furthest-right lane whose status/label matches.",
+  "projects_root": "projects",
+  "master_dir": "all-projects",
+  "default_lane": "backlog",
+  "status_overrides": {
+    "blocked": "dod-n-blocked",
+    "closed": "verify-and-done"
+  },
+  "label_overrides": {
+    "blocked": "dod-n-blocked",
+    "dod_blocked": "dod-n-blocked"
+  },
+  "lanes": [
+    {
+      "id": "backlog",
+      "folder": "1. backlog",
+      "title": "Backlog — raw, not yet specced",
+      "meaning": "New work parked as an idea/ticket. Owner/PM keeps the list; no detail work yet. A new project lands here on `bd create` (status open).",
+      "p_states": ["P1 intake", "P2 ready-for-dev (pre-DoD)"],
+      "board_4_15": ["backlog", "next"],
+      "bead_status": ["open", "backlog", "next"],
+      "bead_labels": ["backlog", "next"]
+    },
+    {
+      "id": "dod-n-blocked",
+      "folder": "2. dod-n-blocked",
+      "title": "DoD & Blocked — specced before launch / parked when blocked",
+      "meaning": "The GATE: ticket is detailed in the bead (DoD / output / outcome / spec / requirements) BEFORE it is pulled into work, and a blocked ticket parks here until its named blocker clears. Std 4.15 dod_blocked — not taken into work until DoD/output/outcome are clarified.",
+      "p_states": ["P2 ready-for-dev (DoD gate)", "B blocked"],
+      "board_4_15": ["dod_blocked"],
+      "bead_status": ["blocked", "dod_blocked"],
+      "bead_labels": ["dod_blocked", "blocked"]
+    },
+    {
+      "id": "in-progress",
+      "folder": "3. in-progress",
+      "title": "In Progress — design, build, review",
+      "meaning": "Active work: spec approved, implementation underway, parallel review squad running.",
+      "p_states": ["P3 in-dev", "P4 review"],
+      "board_4_15": ["in_design", "in_progress", "in_review", "rework"],
+      "bead_status": ["in_progress", "in_design", "in_review", "rework"],
+      "bead_labels": ["in_design", "in_progress", "in_review", "rework"]
+    },
+    {
+      "id": "to-delivery",
+      "folder": "4. to-delivery",
+      "title": "To Delivery — handed off, awaiting activation",
+      "meaning": "Review passed; artifact is being delivered to owner / team / client and we wait for them to receive/activate it.",
+      "p_states": ["P5 delivery"],
+      "board_4_15": ["hypothesis_validation", "hypothesis_confirmed", "owner_received"],
+      "bead_status": ["hypothesis_validation", "hypothesis_confirmed", "owner_received"],
+      "bead_labels": ["delivering", "hypothesis_validation", "hypothesis_confirmed", "owner_received"]
+    },
+    {
+      "id": "verify-and-done",
+      "folder": "5. verify-and-done",
+      "title": "Verify & Done — outcome confirmed, closed",
+      "meaning": "Owner activated the artifact; we verify the JTBD outcome materialized, then the bead is closed and reachable from origin/main.",
+      "p_states": ["P6 outcome-verified", "P7 closed"],
+      "board_4_15": ["owner_activated", "outcome_realized"],
+      "bead_status": ["closed", "owner_activated", "outcome_realized"],
+      "bead_labels": ["outcome-check", "owner_activated", "outcome_realized", "owner-got-output"]
+    }
+  ]
+}
