@@ -92,6 +92,14 @@
       {
         "hooks": [
           {
+            "type": "command",
+            "command": "python3 $CLAUDE_PROJECT_DIR/.agents/skills/0-governance-harness-portability/scripts/harness_doctor.py || true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
             "command": "command -v bd >/dev/null 2>&1 && bd prime --hook-json || true",
             "type": "command"
           }
@@ -122,6 +130,15 @@
           }
         ],
         "matcher": ""
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 $CLAUDE_PROJECT_DIR/.claude/hooks/prompt_to_chapter_nav.py"
+          }
+        ]
       }
     ]
   }

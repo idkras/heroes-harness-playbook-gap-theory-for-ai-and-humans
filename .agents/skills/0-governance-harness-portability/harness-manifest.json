@@ -266,6 +266,17 @@
       ],
       "depends_on": [],
       "note": "RCA 2026-06-17: review/READY/diagnostic artifact referenced by path in the final message but content not surfaced (no code-fence/table) → WARN/BLOCK so the owner sees review content in chat, not just a path. Ships staged WARN."
+    },
+    {
+      "file": "prompt_to_chapter_nav.py",
+      "pillar": "C",
+      "register": [
+        {
+          "event": "UserPromptSubmit",
+          "tools": []
+        }
+      ],
+      "depends_on": []
     }
   ],
   "skills": [

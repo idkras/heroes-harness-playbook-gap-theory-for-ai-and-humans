@@ -92,6 +92,23 @@ Russian primary for human-facing delivery. English for: API names, code identifi
 
 ---
 
+## Chat navigation rule
+
+Every substantive user message (a task or steering, not a bare ack) should appear in
+the chat table-of-contents. Near the start of such a turn, call
+`mcp__ccd_session__mark_chapter` with a short noun-phrase title summarizing the ask.
+The `prompt_to_chapter_nav.py` UserPromptSubmit hook injects this directive on each
+prompt; a hook cannot create a chapter itself (only the model can), so this rule is
+the reliable half of the mechanism. Mark once per message; skip pure acks.
+
+## Harness health
+
+One command answers "did the harness come up?":
+`python3 .agents/skills/0-governance-harness-portability/scripts/harness_doctor.py`.
+It reads `harness-workflow.yaml` (the SSOT) and verifies every declared element
+(toolchain, hooks, integrity, project_management scaffold, local-only beads, skills).
+It also runs on SessionStart, so a fresh chat prints HEALTHY / DEGRADED / BROKEN.
+
 ## When in doubt
 
 Read the relevant standard from `standards/`. If still unclear, open Issue or Discussion before changing canon.

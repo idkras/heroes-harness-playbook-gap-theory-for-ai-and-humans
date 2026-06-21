@@ -32,6 +32,10 @@ getting_started:
         - "verify: checksum-манифест (полнота+целостность) + harness wiring (gaps==0)"
         - печать чеклиста getting-started PASS/WARN/FAIL
       blocking: false             # best-effort, exit 0 — не ломает сессию
+    - step: doctor
+      run: "python3 $CLAUDE_PROJECT_DIR/.agents/skills/0-governance-harness-portability/scripts/harness_doctor.py || true"
+      does: ["читает ЭТОТ файл и печатает verdict-таблицу: всё ли поднялось (toolchain/hooks/integrity/project_management/local_only/skills)"]
+      blocking: false             # печатает HEALTHY/DEGRADED/BROKEN, не ломает сессию
     - step: bd_prime
       run: "command -v bd >/dev/null 2>&1 && bd prime --hook-json || true"
       does: ["контекст beads-воркфлоу в сессию"]
@@ -125,3 +129,45 @@ skills_index:                     # куда смотреть
   critical_chain: ".agents/skills/1-critical-chain-status-report"
   portability_and_harness: ".agents/skills/0-governance-harness-portability"
   land_to_main: ".agents/skills/5-land-to-main-mechanical"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DOCTOR — «всё ли поднялось?» одной командой. Читает ЭТОТ файл и проверяет каждую
+# секцию. Запускается на SessionStart (session_start_chain.doctor) → новый чат сразу
+# печатает verdict. Owner ask 2026-06-21: «doctor, который читает ssot.yaml и по нему
+# проверяет, все ли поднялось; выпиши критерии что harness работает без ошибок».
+doctor:
+  run: "python3 .agents/skills/0-governance-harness-portability/scripts/harness_doctor.py"
+  json: "--json"
+  strict: "--strict   # WARN тоже фейлит (CI gate)"
+  exit: "0 = нет FAIL (PASS/WARN); 1 = есть FAIL; 2 = SSOT нечитаем"
+  verdict: "HEALTHY (0 WARN/FAIL) | DEGRADED (toolchain pending, 0 FAIL) | BROKEN (≥1 FAIL)"
+  # КРИТЕРИИ «harness работает без ошибок» (каждый = проверка doctor'а против этого файла):
+  acceptance_criteria:
+    toolchain:
+      - "venv+deps: PyYAML/pytest/networkx импортируются (deps из install_all.sh) — WARN если нет"
+      - "bd: на PATH (beads) — WARN если нет (гейты fail-open)"
+      - "bd-usable: `bd list` резолвит workspace (dolt embedded + bd init сделан) — WARN если нет"
+    hooks:
+      - "bootstrap: SessionStart harness_bootstrap зарегистрирован в settings.json — FAIL если нет"
+      - "wiring: verify_harness_wiring.py → gaps==0 — FAIL если >0"
+    integrity:
+      - "checksum: harness_template_checksum.py --verify → OK (нет missing/changed/uncontrolled) — FAIL иначе"
+    project_management:
+      - "scaffold: projects/all-projects + все 5 нумерованных lane-папки существуют — FAIL если нет"
+      - "lanes-sync: lanes.json ids == project_management.lanes этого файла (нет drift) — FAIL при drift"
+      - "pm-doctor: project_status_symlinks.py doctor → exit 0 (нет orphan/broken/wrong-target/drift/multi-lane) — FAIL иначе"
+    local_only:
+      - "ignored: каждый local_only путь (.beads/, .dolt/) gitignored — FAIL иначе"
+      - "untracked: .beads НЕ tracked в git (партнёры не наследуют) — FAIL если tracked"
+    skills:
+      - "present: каждый путь skills_index существует на диске — FAIL если нет"
+
+# UX hooks — навигация по чату (Owner ask 2026-06-21: каждый промт/steering → в навигацию).
+chat_navigation:
+  hook: .claude/hooks/prompt_to_chapter_nav.py    # UserPromptSubmit
+  mechanism: >
+    Хук НЕ может сам создать chapter (это умеет только модель через
+    mcp__ccd_session__mark_chapter). Он инжектит директиву на каждый нетривиальный
+    промт → модель помечает сообщение chapter'ом → попадает в навигацию.
+  honest_limit: "semi-deterministic (зависит от исполнения моделью), не hard-гарантия — см. docstring хука"
+  reinforced_by: "AGENTS.md §Chat navigation rule"

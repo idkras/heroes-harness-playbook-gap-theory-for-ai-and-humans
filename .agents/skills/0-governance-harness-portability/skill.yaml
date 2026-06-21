@@ -5,14 +5,18 @@ kind: code                  # code | knowledge (knowledge = SKILL.md only, no sc
 detachable: true            # true | partial | false (см. 0-detachable-skill-packaging §detachable levels)
 runtime: "python3.9+"
 deps:
-  external: []              # stdlib only (json/argparse/pathlib/subprocess/re)
-  workspace: []
+  external: ["PyYAML (harness_doctor reads harness-workflow.yaml; absent → WARN, not crash)"]
+  workspace: ["harness-workflow.yaml (SSOT the doctor reads)"]
 requires_skills: []
 requires_credentials: []
 entrypoints:
   - path: scripts/verify_harness_wiring.py
     kind: cli
     invoke: "python3 .agents/skills/0-governance-harness-portability/scripts/verify_harness_wiring.py --repo-root . --smoke"
+  - path: scripts/harness_doctor.py
+    kind: cli
+    invoke: "python3 .agents/skills/0-governance-harness-portability/scripts/harness_doctor.py"
+    role: "reads harness-workflow.yaml → verifies the whole harness came up (toolchain/hooks/integrity/project_management/local_only/skills); runs on SessionStart"
 tests:
   path: tests/
   run: "python3 -m pytest .agents/skills/0-governance-harness-portability/tests/ -q"
