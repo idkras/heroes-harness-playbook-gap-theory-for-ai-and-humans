@@ -1,0 +1,43 @@
+{
+  "name": "gap-theory-community-skill-handoff",
+  "source_repo": "heroes-rickai-workspace",
+  "target_repo": "heroes-harness-playbook-gap-theory-for-ai-and-humans",
+  "requested_items": [
+    {
+      "request": "RCA skills",
+      "paths": [
+        "skills/2-rca-incidents"
+      ]
+    },
+    {
+      "request": "Hook chat result / how hooks work",
+      "paths": [
+        "docs/hooks-chat-result.md",
+        "skills/0-hook-self-test",
+        "skills/0-hooks-minimum-sufficiency",
+        "skills/0-portable-claude-hooks"
+      ]
+    },
+    {
+      "request": "Visual document skill",
+      "paths": [
+        "skills/visual-explainer"
+      ]
+    },
+    {
+      "request": "Scenarios from conversations and calls",
+      "paths": [
+        "skills/4-conversation-normalize",
+        "skills/4-conversation-action-chain-extract",
+        "skills/2-jtbd-scenarium-create",
+        "skills/4-rickai-calls-jtbd-scenarios-extract"
+      ]
+    }
+  ],
+  "verification": [
+    "python3 verify_handoff.py",
+    "python3 -m py_compile $(find handoff/community-skills -name '*.py' -not -path '*/__pycache__/*')",
+    "python3 -m pip install -r handoff/community-skills/requirements.txt",
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q handoff/community-skills/skills/2-jtbd-scenarium-create/tests handoff/community-skills/skills/4-rickai-calls-jtbd-scenarios-extract/scripts/test_*.py"
+  ]
+}

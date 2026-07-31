@@ -38,6 +38,20 @@ python3 scripts/harness_bootstrap.py     # активировать обвязк
 5. **Фальсифицировать** свои выводы через expectation-vs-reality таблицу
 6. **Применить REDUCE framework** для преодоления сопротивления при изменениях
 
+### Community handoff: дополнительные рабочие скилы
+
+По запросу community добавлен отдельный handoff-пакет:
+[`handoff/community-skills/`](handoff/community-skills/README.md).
+
+Внутри лежат RCA skills, hooks chat result / как применять hook runtime,
+`visual-explainer` для визуальных HTML-документов и скилы для сборки JTBD-сценариев
+из обращений, переписок и звонков. Перед передачей пакета проверь:
+
+```bash
+cd handoff/community-skills
+python3 verify_handoff.py
+```
+
 ---
 
 ## Кому это нужно

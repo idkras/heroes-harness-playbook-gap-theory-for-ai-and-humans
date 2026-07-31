@@ -1,0 +1,4 @@
+pandas
+pyarrow
+pymorphy3
+pytest
